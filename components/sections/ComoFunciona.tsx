@@ -1,5 +1,5 @@
 "use client";
-import { useId, useState, type CSSProperties } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { Bell, CalendarClock, Check } from "lucide-react";
 
 const STEPS = [
@@ -12,6 +12,14 @@ export function ComoFunciona() {
   const [step, setStep] = useState(0);
   const [nombre, setNombre] = useState("Juan Pérez");
   const inputId = useId();
+  const panelsRef = useRef<HTMLDivElement>(null);
+  const moveFocus = useRef(false);
+  const go = (n: number) => { moveFocus.current = true; setStep(n); };
+  useEffect(() => {
+    if (!moveFocus.current) return;
+    moveFocus.current = false;
+    panelsRef.current?.querySelector<HTMLElement>("[data-active] input, [data-active] button")?.focus();
+  }, [step]);
   const quien = nombre.trim() || "tu visita";
   const primer = nombre.trim().split(/\s+/)[0] || "";
 
@@ -25,12 +33,12 @@ export function ComoFunciona() {
             <span className="sr-only">Paso {step + 1}: </span>
             {STEPS[step].titulo}.
           </p>
-          <p key={`t${step}`} className="cf-clause t-lead mt-4 max-w-[30ch]">{STEPS[step].texto}</p>
         </div>
+        <p key={`t${step}`} className="cf-clause t-lead mt-4 max-w-[30ch]">{STEPS[step].texto}</p>
       </div>
 
       <div className="cf-stage">
-        <div className="cf-panels">
+        <div className="cf-panels" ref={panelsRef}>
           <div className="cf-panel app" data-ui data-active={step === 0 || undefined}>
             <p className="app-label">Nueva visita</p>
             <label htmlFor={inputId} className="app-field-label">Nombre de tu visita</label>
@@ -46,7 +54,7 @@ export function ComoFunciona() {
             <p className="app-fake"><CalendarClock size={18} strokeWidth={2} aria-hidden />Sáb 18, de 10 a 12 h</p>
             <p className="app-field-label">Motivo</p>
             <p className="app-fake">Plomero para la unidad 4°B</p>
-            <button type="button" className="btn btn-primary w-full mt-5" onClick={() => setStep(1)}>Invitar</button>
+            <button type="button" className="btn btn-primary w-full mt-5" onClick={() => go(1)}>Invitar</button>
           </div>
 
           <div className="cf-panel app" data-ui data-active={step === 1 || undefined}>
@@ -61,7 +69,7 @@ export function ComoFunciona() {
                 </p>
               </div>
             </div>
-            <button type="button" className="btn btn-primary w-full mt-5" onClick={() => setStep(2)}>Mostrarlo en la entrada</button>
+            <button type="button" className="btn btn-primary w-full mt-5" onClick={() => go(2)}>Mostrarlo en la entrada</button>
           </div>
 
           <div className="cf-panel app" data-ui data-active={step === 2 || undefined}>
@@ -71,8 +79,8 @@ export function ComoFunciona() {
               <p className="app-title mt-3 truncate">{quien}</p>
               <p className="t-small text-ink-muted">Unidad 4°B · Sáb 18, 10:04 h</p>
             </div>
-            <p className="notif"><Bell size={18} strokeWidth={2} aria-hidden /><span>Le avisamos a la 4°B: <strong className="font-semibold">{quien} llegó.</strong></span></p>
-            <button type="button" className="btn btn-secondary w-full mt-5" onClick={() => setStep(0)}>Invitar a otra persona</button>
+            <p className="notif"><Bell size={18} strokeWidth={2} aria-hidden /><span className="notif-text">Le avisamos a la 4°B: <strong className="font-semibold">{quien} llegó.</strong></span></p>
+            <button type="button" className="btn btn-secondary w-full mt-5" onClick={() => go(0)}>Invitar a otra persona</button>
           </div>
         </div>
       </div>
