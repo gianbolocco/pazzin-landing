@@ -570,7 +570,7 @@ html:not(.js) .cf-range { display: none; }
 .piloto-a { background: var(--azul-tint); color: var(--text); }
 .piloto-b { background: var(--azul); color: #fff; }
 .piloto-seam { position: absolute; overflow: visible; }
-.piloto-seam line { stroke: var(--azul); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.1 8; vector-effect: non-scaling-stroke; }
+.piloto-seam line { stroke: var(--navy); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.1 8; vector-effect: non-scaling-stroke; }
 .piloto-seam-v { display: none; }
 .piloto-seam-h { left: 24px; right: 24px; bottom: -2px; width: calc(100% - 48px); height: 4px; }
 /* móvil: muescas en las esquinas inferiores de A y superiores de B */
