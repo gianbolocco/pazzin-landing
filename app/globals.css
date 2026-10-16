@@ -476,3 +476,82 @@ html:not(.js) .cf-range { display: none; }
 @keyframes typing-dot { to { transform: translateY(-3px); opacity: 0.5; } }
 @keyframes bubble-in { from { opacity: 0; transform: translateY(6px) scale(0.97); } }
 @keyframes notif-in { from { opacity: 0; transform: translateY(-8px); } }
+
+/* ---------- Para quién ---------- */
+.pq-group { margin-top: 56px; }
+.pq-mods { display: flex; flex-direction: column; gap: 48px; margin-top: 32px; }
+.mod { display: grid; gap: 16px; }
+.mod-panel {
+  background: var(--surface); border-radius: var(--r-md); padding: 16px;
+  overflow: hidden; min-height: 120px; display: flex; align-items: center;
+}
+@media (min-width: 640px) {
+  .mod { grid-template-columns: 380px minmax(0, 300px); gap: 24px; align-items: start; }
+}
+@media (min-width: 1024px) {
+  .pq-group, .pq-mods { margin-left: 16.666%; }
+  .pq-mods { margin-left: 0; gap: 72px; }
+  .pq-group { margin-top: 96px; }
+}
+
+.reg { width: 100%; min-width: 340px; border-collapse: collapse; font-size: 14px; line-height: 20px; }
+.reg th { text-align: left; font-size: 13px; font-weight: 600; color: var(--text-muted); padding: 0 8px 8px; }
+.reg td { padding: 8px; border-top: 1px solid var(--line); white-space: nowrap; }
+.reg td:first-child, .reg th:first-child { padding-left: 0; }
+
+.srch { width: 100%; min-width: 300px; }
+.srch-box { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px; border-radius: var(--r-sm); border: 2px solid var(--control-border); font-weight: 600; }
+.srch-box svg { color: var(--text-muted); }
+.srch-q { display: inline-block; }
+.srch-res { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.srch-res li { display: grid; grid-template-columns: 110px 1fr auto; gap: 8px; align-items: center; padding: 8px 10px; border-radius: var(--r-sm); background: var(--bg); white-space: nowrap; }
+
+.detalle { width: 100%; display: grid; gap: 8px; font-size: 14px; line-height: 20px; }
+.detalle > div { display: grid; grid-template-columns: 84px 1fr; gap: 8px; }
+.detalle dt { color: var(--text-muted); font-weight: 600; }
+
+.vnotif { width: 100%; }
+.vnotif-card { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-radius: var(--r-md); background: var(--bg); }
+.vnotif-ic { display: grid; place-items: center; width: 36px; height: 36px; flex: none; border-radius: 10px; background: var(--azul); color: #fff; }
+
+.scan { display: flex; gap: 16px; align-items: center; }
+.scan-frame { position: relative; width: 88px; height: 88px; flex: none; }
+.scan-frame span { position: absolute; width: 22px; height: 22px; border: 3px solid var(--azul-text); }
+.scan-frame span:nth-child(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; border-radius: 8px 0 0 0; }
+.scan-frame span:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; border-radius: 0 8px 0 0; }
+.scan-frame span:nth-child(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; border-radius: 0 0 0 8px; }
+.scan-frame span:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; border-radius: 0 0 8px 0; }
+
+/* ---------- Seguridad ---------- */
+.seg { background: var(--surface); padding-block: 48px; }
+.seg .venc { background: var(--bg); max-width: 380px; }
+@media (min-width: 1024px) { .seg { padding-block: 96px; } }
+.venc-chips { display: grid; justify-items: start; }
+.venc-chips > * { grid-area: 1 / 1; }
+.venc-a { opacity: 0; transform: translateY(-4px); }
+
+/* ---------- Rituales: corren una vez al entrar; el reposo es el estado final ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .reg tbody tr { transition: opacity 320ms var(--ease-out), transform 420ms var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms + 150ms); }
+  .js .reg:not(.is-in) tbody tr { opacity: 0; transform: translateY(-8px); }
+
+  .srch-q { transition: clip-path 420ms steps(3, end) 200ms; }
+  .js .srch:not(.is-in) .srch-q { clip-path: inset(0 100% 0 0); }
+  .srch-res li { transition: opacity 300ms var(--ease-out), transform 380ms var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms + 700ms); }
+  .js .srch:not(.is-in) .srch-res li { opacity: 0; transform: translateY(6px); }
+
+  .detalle > div { transition: opacity 360ms var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms + 150ms); }
+  .js .detalle:not(.is-in) > div { opacity: 0; }
+
+  .vnotif-card { transition: opacity 320ms var(--ease-out) 200ms, transform 420ms var(--ease-out) 200ms; }
+  .js .vnotif:not(.is-in) .vnotif-card { opacity: 0; transform: translateY(-12px); }
+
+  .scan-frame { transition: opacity 300ms var(--ease-out), transform 500ms var(--ease-out); }
+  .js .scan:not(.is-in) .scan-frame { opacity: 0; transform: scale(1.08); }
+  .scan .chip { transition: opacity 260ms var(--ease-out) 500ms, transform 320ms var(--ease-out) 500ms; }
+  .js .scan:not(.is-in) .chip { opacity: 0; transform: translateY(4px); }
+
+  .venc-a, .venc-b { transition: opacity 260ms var(--ease-out) 800ms, transform 320ms var(--ease-out) 800ms; }
+  .js .venc:not(.is-in) .venc-a { opacity: 1; transform: none; }
+  .js .venc:not(.is-in) .venc-b { opacity: 0; transform: translateY(4px); }
+}
