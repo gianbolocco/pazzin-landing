@@ -310,26 +310,12 @@
 }
 .pass-hero { width: min(100%, 500px); cursor: pointer; }
 
-/* Escritorio: el pase se para, como en el celular de la visita, y llena el escenario alto. */
+/* Escritorio: el pase sigue horizontal y crece hasta llenar el ancho del escenario. */
 @media (min-width: 1024px) {
-  .pass-hero { width: min(100%, 400px, calc((100svh - var(--header-h) - 96px) * 0.78)); }
-  .hero-stage .pass { flex-direction: column; padding: 0 0 8px; }
-  .hero-stage .pass-body {
-    border-radius: var(--r-lg) var(--r-lg) 6px 6px; gap: 6px; padding: 36px 32px 32px;
-    -webkit-mask: radial-gradient(circle var(--notch) at 50% 0, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore: muesca */
-    mask: radial-gradient(circle var(--notch) at 50% 0, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore: muesca */
-  }
-  .hero-stage .pass-nombre { font-size: clamp(28px, 9cqw, 36px); letter-spacing: -1px; }
-  .hero-stage .pass-motivo { font-size: 16px; }
-  .hero-stage .pass-cut { display: none; }
-  .hero-stage .pass-cut-h { display: block; }
-  .hero-stage .pass-talon-wrap { transform: translateY(8px); }
-  .hero-stage .pass-talon {
-    border-radius: 6px 6px var(--r-lg) var(--r-lg); padding: 28px 28px 36px;
-    -webkit-mask: radial-gradient(circle var(--notch) at 50% 100%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore: muesca */
-    mask: radial-gradient(circle var(--notch) at 50% 100%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore: muesca */
-  }
-  .hero-stage .pass-qr { width: 56cqw; }
+  .pass-hero { width: min(100%, 560px); }
+  .hero-stage .pass-nombre { font-size: clamp(28px, 7.6cqw, 40px); letter-spacing: -1px; }
+  .hero-stage .pass-motivo { font-size: clamp(16px, 3.8cqw, 18px); }
+  .hero-stage .pass-qr { width: clamp(96px, 25cqw, 140px); }
 }
 
 /* ---------- El pase ---------- */
@@ -352,8 +338,6 @@
 .pass-hora svg { color: var(--azul-text); flex: none; }
 .pass-cut { position: absolute; right: -1px; top: 14px; bottom: 14px; width: 4px; height: calc(100% - 28px); overflow: visible; }
 .pass-cut line { stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.1 7; vector-effect: non-scaling-stroke; }
-.pass-cut-h { display: none; position: absolute; left: 14px; right: 14px; bottom: -1px; width: calc(100% - 28px); height: 4px; overflow: visible; }
-.pass-cut-h line { stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.1 7; vector-effect: non-scaling-stroke; }
 .pass-cut-base { stroke: var(--line); }
 .pass-cut-on { stroke: var(--control-border); }
 .pass-talon-wrap { flex: 0 0 auto; transform: translateX(8px); }
@@ -374,7 +358,6 @@
 @media (prefers-reduced-motion: no-preference) {
   .pass.is-playing { animation: pass-in 380ms var(--ease-out) both; }
   .pass.is-playing .pass-cut-on { animation: pass-cut 420ms var(--ease-out) 300ms both; }
-  .pass.is-playing .pass-cut-h .pass-cut-on { animation-name: pass-cut-h; }
   .pass.is-playing .pass-talon-wrap { animation: pass-tear 420ms var(--ease-out) 700ms both; }
   .pass.is-playing .pass-talon-sol { animation: pass-fade 360ms var(--ease-out) 720ms both; }
   .pass.is-playing .pass-chip-a { animation: pass-chip-out 260ms var(--ease-out) 1000ms both; }
@@ -384,7 +367,6 @@
 }
 @keyframes pass-in { from { opacity: 0; transform: translateY(12px); } }
 @keyframes pass-cut { from { clip-path: inset(0 0 100% 0); } }
-@keyframes pass-cut-h { from { clip-path: inset(0 100% 0 0); } }
 @keyframes pass-tear { from { transform: none; } }
 @keyframes pass-fade { from { opacity: 0; } }
 @keyframes pass-chip-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-4px); } }
