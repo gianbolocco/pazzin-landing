@@ -13,7 +13,7 @@ export function Piloto() {
       <div className="piloto-b">
         <h3 className="t-title">Después del piloto</h3>
         <p className="mt-auto pt-10">
-          <span className="t-display block break-words">{site.precio}</span>
+          <span className="t-display piloto-precio block break-words">{site.precio}</span>
           <span className="t-lead">por unidad por mes</span>
         </p>
         <p className="t-body mt-4 max-w-[40ch]">{site.precioIncluye}</p>

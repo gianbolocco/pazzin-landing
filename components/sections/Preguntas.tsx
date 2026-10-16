@@ -14,8 +14,8 @@ export function Preguntas() {
     <section id="preguntas" aria-labelledby="faq-title" className="wrap sec grid gap-8 lg:grid-cols-12">
       <h2 id="faq-title" className="t-display lg:col-span-4 max-w-[12ch]">Preguntas frecuentes.</h2>
       <div className="lg:col-span-8 flex flex-col gap-2">
-        {FAQ.map(([q, a]) => (
-          <details key={q} name="faq" className="faq">
+        {FAQ.map(([q, a], i) => (
+          <details key={q} name="faq" className="faq" open={i === 0}>
             <summary>
               <h3 className="t-heading">{q}</h3>
               <ChevronDown className="faq-chev" size={22} strokeWidth={2} aria-hidden />

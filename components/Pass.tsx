@@ -47,6 +47,11 @@ export function Pass({ className = "", ...rest }: Props) {
           <line className="pass-cut-base" x1="2" y1="2" x2="2" y2="98" />
           <line className="pass-cut-on" x1="2" y1="2" x2="2" y2="98" />
         </svg>
+        {/* Corte horizontal: solo en el pase vertical del escenario de escritorio. */}
+        <svg className="pass-cut-h" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden>
+          <line className="pass-cut-base" x1="2" y1="2" x2="98" y2="2" />
+          <line className="pass-cut-on" x1="2" y1="2" x2="98" y2="2" />
+        </svg>
       </div>
       <div className="pass-piece pass-talon-wrap">
         <div className="pass-talon">

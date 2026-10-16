@@ -310,6 +310,28 @@
 }
 .pass-hero { width: min(100%, 500px); cursor: pointer; }
 
+/* Escritorio: el pase se para, como en el celular de la visita, y llena el escenario alto. */
+@media (min-width: 1024px) {
+  .pass-hero { width: min(100%, 400px, calc((100svh - var(--header-h) - 96px) * 0.78)); }
+  .hero-stage .pass { flex-direction: column; padding: 0 0 8px; }
+  .hero-stage .pass-body {
+    border-radius: var(--r-lg) var(--r-lg) 6px 6px; gap: 6px; padding: 36px 32px 32px;
+    -webkit-mask: radial-gradient(circle var(--notch) at 50% 0, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore: muesca */
+    mask: radial-gradient(circle var(--notch) at 50% 0, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore: muesca */
+  }
+  .hero-stage .pass-nombre { font-size: clamp(28px, 9cqw, 36px); letter-spacing: -1px; }
+  .hero-stage .pass-motivo { font-size: 16px; }
+  .hero-stage .pass-cut { display: none; }
+  .hero-stage .pass-cut-h { display: block; }
+  .hero-stage .pass-talon-wrap { transform: translateY(8px); }
+  .hero-stage .pass-talon {
+    border-radius: 6px 6px var(--r-lg) var(--r-lg); padding: 28px 28px 36px;
+    -webkit-mask: radial-gradient(circle var(--notch) at 50% 100%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore: muesca */
+    mask: radial-gradient(circle var(--notch) at 50% 100%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore: muesca */
+  }
+  .hero-stage .pass-qr { width: 56cqw; }
+}
+
 /* ---------- El pase ---------- */
 .pass { --notch: 13px; display: flex; width: 100%; padding-right: 8px; container-type: inline-size; color: var(--text); }
 .pass-piece { filter: var(--pass-shadow); }
@@ -330,6 +352,8 @@
 .pass-hora svg { color: var(--azul-text); flex: none; }
 .pass-cut { position: absolute; right: -1px; top: 14px; bottom: 14px; width: 4px; height: calc(100% - 28px); overflow: visible; }
 .pass-cut line { stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.1 7; vector-effect: non-scaling-stroke; }
+.pass-cut-h { display: none; position: absolute; left: 14px; right: 14px; bottom: -1px; width: calc(100% - 28px); height: 4px; overflow: visible; }
+.pass-cut-h line { stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.1 7; vector-effect: non-scaling-stroke; }
 .pass-cut-base { stroke: var(--line); }
 .pass-cut-on { stroke: var(--control-border); }
 .pass-talon-wrap { flex: 0 0 auto; transform: translateX(8px); }
@@ -350,6 +374,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .pass.is-playing { animation: pass-in 380ms var(--ease-out) both; }
   .pass.is-playing .pass-cut-on { animation: pass-cut 420ms var(--ease-out) 300ms both; }
+  .pass.is-playing .pass-cut-h .pass-cut-on { animation-name: pass-cut-h; }
   .pass.is-playing .pass-talon-wrap { animation: pass-tear 420ms var(--ease-out) 700ms both; }
   .pass.is-playing .pass-talon-sol { animation: pass-fade 360ms var(--ease-out) 720ms both; }
   .pass.is-playing .pass-chip-a { animation: pass-chip-out 260ms var(--ease-out) 1000ms both; }
@@ -359,6 +384,7 @@
 }
 @keyframes pass-in { from { opacity: 0; transform: translateY(12px); } }
 @keyframes pass-cut { from { clip-path: inset(0 0 100% 0); } }
+@keyframes pass-cut-h { from { clip-path: inset(0 100% 0 0); } }
 @keyframes pass-tear { from { transform: none; } }
 @keyframes pass-fade { from { opacity: 0; } }
 @keyframes pass-chip-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-4px); } }
@@ -379,14 +405,15 @@
     min-height: min(88svh, 880px); margin-block: 96px;
   }
   .cf-head { padding: 96px 64px 32px max(32px, calc((100vw - 1200px) / 2)); }
+  /* El paso es lo dominante del campo izquierdo: mismo tamaño que el h1. */
+  .cf-clause.t-display { font-size: clamp(52px, 4.4vw, 64px); line-height: 1; letter-spacing: -2px; }
+  /* El paso baja hasta el slider que lo maneja; el aire queda bajo el título. */
+  .cf-head { display: flex; flex-direction: column; }
+  .cf-head > [aria-live] { margin-top: auto; padding-top: 32px; }
   .cf-controls { padding: 0 64px 72px max(32px, calc((100vw - 1200px) / 2)); }
 }
 .cf-clause { display: flex; align-items: baseline; gap: 16px; }
 .cf-clause.t-lead { display: block; }
-.cf-num {
-  flex: none; display: inline-grid; place-items: center; width: 1.1em; height: 1.1em; align-self: center;
-  border-radius: var(--r-md); background: var(--azul-tint); color: var(--text); font-size: 0.7em; line-height: 1;
-}
 @media (prefers-reduced-motion: no-preference) {
   .js .cf-clause { animation: clause-in var(--t-ui) var(--ease-out) both; }
 }
@@ -418,14 +445,18 @@ html:not(.js) .cf-range { display: none; }
 .cf-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
 .cf-step {
   display: flex; align-items: center; gap: 8px; min-height: 44px; width: 100%; text-align: left;
-  font-size: 15px; line-height: 20px; font-weight: 600; color: var(--text-muted); cursor: pointer;
+  font-size: 16px; line-height: 20px; font-weight: 600; color: var(--text-muted); cursor: pointer;
   border-radius: var(--r-sm); transition: color var(--t-hover) ease;
 }
 .cf-step[aria-current="step"] { color: var(--text); }
-.cf-step-n { flex: none; display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; background: var(--azul-tint); color: var(--text); font-size: 13px; }
 .js .cf-step-text { display: none; }
 .cf-step-text { font-size: 14px; line-height: 20px; color: var(--text); margin-top: 4px; }
 @media (max-width: 479px) { .cf-steps { grid-template-columns: 1fr; gap: 0; } }
+/* Cada nombre bajo su parada del slider. */
+@media (min-width: 480px) {
+  .cf-steps li:nth-child(2) .cf-step { justify-content: center; text-align: center; }
+  .cf-steps li:nth-child(3) .cf-step { justify-content: flex-end; text-align: right; }
+}
 
 /* Paneles: sin JS se ven los tres apilados; con JS, uno a la vez con crossfade. */
 .cf-panels { width: min(100%, 400px); display: grid; gap: 16px; }
@@ -489,10 +520,15 @@ html:not(.js) .cf-range { display: none; }
 @media (min-width: 640px) {
   .mod { grid-template-columns: 380px minmax(0, 300px); gap: 24px; align-items: start; }
 }
+/* Escritorio: el lado de la puerta a la izquierda, sus módulos ocupando el resto del ancho. */
 @media (min-width: 1024px) {
-  .pq-group, .pq-mods { margin-left: 16.666%; }
-  .pq-mods { margin-left: 0; gap: 72px; }
-  .pq-group { margin-top: 96px; }
+  .pq-group { display: grid; grid-template-columns: 3fr 9fr; column-gap: 64px; align-items: start; margin-top: 96px; }
+  .pq-group > :not(.pq-mods) { grid-column: 1; }
+  .pq-mods { grid-column: 2; grid-row: 1 / span 4; margin-top: 0; gap: 72px; }
+  .mod { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 40px; }
+  .mod-panel { padding: 24px; }
+  .mod-text .t-heading { font-size: 28px; line-height: 34px; letter-spacing: -0.5px; }
+  .mod-text .t-body { font-size: 20px; line-height: 30px; }
 }
 
 .reg { width: 100%; min-width: 340px; border-collapse: collapse; font-size: 14px; line-height: 20px; }
@@ -593,6 +629,7 @@ html:not(.js) .cf-range { display: none; }
   .piloto-a { padding: 72px 64px 72px max(32px, calc((100vw - 1200px) / 2)); }
   .piloto-b { padding: 72px max(32px, calc((100vw - 1200px) / 2)) 72px 64px; }
   .piloto-seam-h { display: none; }
+  .piloto-precio { font-size: clamp(52px, 4.4vw, 64px); line-height: 1; letter-spacing: -2px; margin-bottom: 8px; }
   .piloto-seam-v { display: block; top: 24px; bottom: 24px; right: -2px; width: 4px; height: calc(100% - 48px); }
   .piloto-a {
     -webkit-mask: radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat, /* taste-skill-ignore */
@@ -627,12 +664,15 @@ html:not(.js) .cf-range { display: none; }
   .faq-chev { transition: transform var(--t-ui) var(--ease-out); }
 }
 .faq-a { padding: 0 20px 20px; max-width: 65ch; }
+.faq:not([open]) .faq-a { visibility: hidden; }
 @media (hover: hover) and (pointer: fine) { .faq summary:hover h3 { color: var(--azul-text); } }
 @supports (interpolate-size: allow-keywords) {
   @media (prefers-reduced-motion: no-preference) {
     .faq { interpolate-size: allow-keywords; }
     .faq::details-content { height: 0; overflow: clip; transition: height 280ms var(--ease-out), content-visibility 280ms allow-discrete; }
     .faq[open]::details-content { height: auto; }
+    .faq-a { transition: visibility 0s 280ms; }
+    .faq[open] .faq-a { transition-delay: 0s; }
   }
 }
 
@@ -658,15 +698,12 @@ html:not(.js) .cf-range { display: none; }
   transition: background-color var(--t-hover) ease, color var(--t-hover) ease, border-color var(--t-hover) ease;
 }
 .rol-opt input:checked + span { background: #E6ECFF; color: var(--navy); border-color: #E6ECFF; }
-.faq:not([open]) .faq-a { visibility: hidden; }
 .rol-opt input:focus-visible + span { outline: 2px solid #FFC933; outline-offset: 2px; }
 .rol-opt input[aria-invalid="true"] + span { border-color: #FF8A7A; }
 .field-error { display: flex; gap: 6px; align-items: flex-start; margin-top: 8px; font-size: 14px; line-height: 20px; color: #FF8A7A; }
 .field-error svg { flex: none; margin-top: 2px; }
 .form-summary { font-size: 16px; line-height: 22px; font-weight: 600; color: #FF8A7A; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; } /* taste-skill-ignore: honeypot oculto */
-    .faq-a { transition: visibility 0s 280ms; }
-    .faq[open] .faq-a { transition-delay: 0s; }
 .form-done { display: flex; flex-direction: column; gap: 16px; padding-block: 24px; outline: none; }
 .form-done-ic { display: grid; place-items: center; width: 48px; height: 48px; border-radius: var(--r-md); background: var(--sol); color: var(--navy); }
 @media (prefers-reduced-motion: no-preference) {

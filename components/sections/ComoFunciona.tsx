@@ -29,7 +29,6 @@ export function ComoFunciona() {
         <h2 id="cf-title" className="t-title">Cómo funciona</h2>
         <div aria-live="polite" className="mt-8">
           <p key={step} className="cf-clause t-display">
-            <span className="cf-num" aria-hidden>{step + 1}</span>
             <span className="sr-only">Paso {step + 1}: </span>
             {STEPS[step].titulo}.
           </p>
@@ -99,7 +98,6 @@ export function ComoFunciona() {
           {STEPS.map((s, i) => (
             <li key={s.titulo}>
               <button type="button" className="cf-step" aria-current={i === step ? "step" : undefined} onClick={() => setStep(i)}>
-                <span className="cf-step-n" aria-hidden>{i + 1}</span>
                 <span>{s.titulo}</span>
               </button>
               <p className="cf-step-text">{s.texto}</p>
