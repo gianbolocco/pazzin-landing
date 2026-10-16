@@ -5,6 +5,7 @@ import { ParaQuien } from "@/components/sections/ParaQuien";
 import { Seguridad } from "@/components/sections/Seguridad";
 import { Piloto } from "@/components/sections/Piloto";
 import { Preguntas } from "@/components/sections/Preguntas";
+import { BandaFinal } from "@/components/sections/BandaFinal";
 import { Footer } from "@/components/sections/Footer";
 import { InView } from "@/components/InView";
 
@@ -19,6 +20,7 @@ export default function Page() {
         <Seguridad />
         <Piloto />
         <Preguntas />
+        <BandaFinal />
       </main>
       <Footer />
       <InView />
