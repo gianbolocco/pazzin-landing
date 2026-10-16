@@ -452,12 +452,12 @@ html:not(.js) .cf-range { display: none; }
 .cf-panels { width: min(100%, 400px); display: grid; gap: 16px; }
 .js .cf-panel {
   grid-area: 1 / 1; align-self: center; opacity: 0; visibility: hidden;
-  transition: opacity var(--t-ui) var(--ease-out), visibility 0s 280ms;
+  transition: opacity 150ms var(--ease-out), visibility 0s 150ms; /* la salida es más rápida que la entrada */
 }
-.js .cf-panel[data-active] { opacity: 1; visibility: visible; transition-delay: 0s; }
+.js .cf-panel[data-active] { opacity: 1; visibility: visible; transition: opacity var(--t-ui) var(--ease-out), visibility 0s; }
 @media (prefers-reduced-motion: no-preference) {
-  .js .cf-panel { transform: translateY(8px); transition: opacity var(--t-ui) var(--ease-out), transform 280ms var(--ease-out), visibility 0s 280ms; }
-  .js .cf-panel[data-active] { transform: none; transition-delay: 0s; }
+  .js .cf-panel { transform: translateY(8px); transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out), visibility 0s 150ms; }
+  .js .cf-panel[data-active] { transform: none; transition: opacity var(--t-ui) var(--ease-out), transform 280ms var(--ease-out), visibility 0s; }
 }
 
 /* Fragmentos de la app (data-ui) */
@@ -487,13 +487,13 @@ html:not(.js) .cf-range { display: none; }
 .notif svg { flex: none; margin-top: 2px; color: var(--azul-text); }
 
 @media (prefers-reduced-motion: no-preference) {
-  .js .cf-panel[data-active] .typing { animation: typing-life 900ms ease both; }
-  .js .cf-panel[data-active] .typing i { animation: typing-dot 300ms ease-in-out 3 alternate; }
-  .js .cf-panel[data-active] .typing i:nth-child(2) { animation-delay: 100ms; }
-  .js .cf-panel[data-active] .typing i:nth-child(3) { animation-delay: 200ms; }
-  .js .cf-panel[data-active] .bubble { animation: bubble-in 320ms var(--ease-out) 760ms both; }
+  .js .cf-panel[data-active] .typing { animation: typing-life 600ms ease both; }
+  .js .cf-panel[data-active] .typing i { animation: typing-dot 200ms ease-in-out 3 alternate; }
+  .js .cf-panel[data-active] .typing i:nth-child(2) { animation-delay: 70ms; }
+  .js .cf-panel[data-active] .typing i:nth-child(3) { animation-delay: 140ms; }
+  .js .cf-panel[data-active] .bubble { animation: bubble-in 320ms var(--ease-out) 480ms both; }
   .js .cf-panel[data-active] .scan-ok .chip { animation: pass-chip-in 320ms var(--ease-out) 200ms both; }
-  .js .cf-panel[data-active] .notif { animation: notif-in 360ms var(--ease-out) 620ms both; }
+  .js .cf-panel[data-active] .notif { animation: notif-in 360ms var(--ease-out) 400ms both; }
 }
 @keyframes typing-life { 0% { opacity: 0; } 15%, 80% { opacity: 1; } 100% { opacity: 0; } }
 @keyframes typing-dot { to { transform: translateY(-3px); opacity: 0.5; } }
