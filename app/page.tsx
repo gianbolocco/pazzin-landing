@@ -1,11 +1,14 @@
-import { Logo } from "@/components/Logo";
+import { Header } from "@/components/sections/Header";
+import { Footer } from "@/components/sections/Footer";
 
 export default function Page() {
   return (
-    <main className="wrap sec">
-      <Logo width={160} />
-      <h1 className="t-display-xl mt-8">Tus visitas entran sin vueltas.</h1>
-      <a className="btn btn-primary mt-6" href="#demo">Pedí una demo</a>
-    </main>
+    <>
+      <Header />
+      <main id="contenido">
+        <div className="wrap sec"><h1 className="t-display-xl">Tus visitas entran sin vueltas.</h1></div>
+      </main>
+      <Footer />
+    </>
   );
 }

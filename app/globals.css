@@ -229,3 +229,46 @@
   background: var(--surface); color: var(--text); padding: 12px 16px; border-radius: var(--r-sm); font-weight: 600;
 }
 .skip:focus { top: 12px; }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 50; background: var(--bg); }
+@supports (animation-timeline: scroll()) {
+  .site-header { animation: header-tone linear both; animation-timeline: scroll(); animation-range: 0 96px; }
+  @keyframes header-tone { to { background-color: var(--surface); } }
+}
+.nav-link {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px;
+  border-radius: var(--r-sm); font-size: 15px; font-weight: 600; color: var(--text);
+  transition: background-color var(--t-hover) ease, color var(--t-hover) ease;
+}
+@media (hover: hover) and (pointer: fine) { .nav-link:hover { background: var(--azul-tint); } }
+
+.theme-btn svg { grid-area: 1 / 1; transition: opacity var(--t-ui) var(--ease-out), transform var(--t-ui) var(--ease-out); }
+.theme-btn .i-sun { opacity: 0; transform: rotate(-45deg) scale(0.8); }
+.theme-btn[data-dark] .i-moon { opacity: 0; transform: rotate(45deg) scale(0.8); }
+.theme-btn[data-dark] .i-sun { opacity: 1; transform: none; }
+
+/* ---------- Menú móvil ---------- */
+.mnav summary { list-style: none; }
+.mnav summary::-webkit-details-marker { display: none; }
+.mnav summary svg { grid-area: 1 / 1; }
+.mnav .i-close, .mnav[open] .i-open { display: none; }
+.mnav[open] .i-close { display: block; }
+.mnav-panel {
+  position: absolute; left: 0; right: 0; top: 100%;
+  background: var(--surface); padding: 8px 16px 20px;
+}
+.mnav-link { display: flex; align-items: center; min-height: 52px; font-size: 20px; font-weight: 700; color: var(--text); }
+@media (prefers-reduced-motion: no-preference) {
+  .mnav[open] .mnav-panel { animation: menu-in var(--t-ui) var(--ease-out); transform-origin: top right; }
+}
+@keyframes menu-in { from { opacity: 0; transform: translateY(-6px) scale(0.98); } }
+
+/* ---------- Footer ---------- */
+.footer-menu { display: flex; flex-direction: column; gap: 12px; }
+.footer-menu a { display: inline-flex; min-height: 44px; align-items: center; color: var(--text);
+  transition: transform var(--t-ui) var(--ease-out), color var(--t-hover) ease; }
+@media (hover: hover) and (pointer: fine) {
+  .footer-menu:hover a:not(:hover) { color: var(--text-muted); }
+  .footer-menu a:hover { transform: translateX(12px); }
+}
