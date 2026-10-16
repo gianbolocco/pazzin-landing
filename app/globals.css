@@ -362,3 +362,109 @@
 @keyframes pass-fade { from { opacity: 0; } }
 @keyframes pass-chip-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-4px); } }
 @keyframes pass-chip-in { from { opacity: 0; transform: translateY(4px); } }
+
+/* ---------- Cómo funciona ---------- */
+.cf { display: grid; grid-template-areas: "head" "stage" "controls"; background: var(--surface); margin-block: 48px; }
+.cf-head { grid-area: head; padding: 48px 16px 24px; }
+.cf-stage { grid-area: stage; display: grid; place-items: center; background: var(--azul); padding: 40px 16px; }
+.cf-controls { grid-area: controls; padding: 24px 16px 48px; }
+@media (min-width: 768px) {
+  .cf-head { padding-inline: 32px; } .cf-controls { padding-inline: 32px; } .cf-stage { padding: 56px 32px; }
+}
+@media (min-width: 1024px) {
+  .cf {
+    grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto;
+    grid-template-areas: "head stage" "controls stage";
+    min-height: min(88svh, 880px); margin-block: 96px;
+  }
+  .cf-head { padding: 96px 64px 32px max(32px, calc((100vw - 1200px) / 2)); }
+  .cf-controls { padding: 0 64px 72px max(32px, calc((100vw - 1200px) / 2)); }
+}
+.cf-clause { display: flex; align-items: baseline; gap: 16px; }
+.cf-clause.t-lead { display: block; }
+.cf-num {
+  flex: none; display: inline-grid; place-items: center; width: 1.1em; height: 1.1em; align-self: center;
+  border-radius: var(--r-md); background: var(--azul-tint); color: var(--text); font-size: 0.7em; line-height: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .js .cf-clause { animation: clause-in var(--t-ui) var(--ease-out) both; }
+}
+@keyframes clause-in { from { opacity: 0; transform: translateY(6px); } }
+
+/* Slider */
+.cf-range { position: relative; height: 44px; display: flex; align-items: center; }
+.cf-range::before, .cf-range-fill { content: ""; position: absolute; left: 0; right: 0; height: 8px; border-radius: 4px; }
+.cf-range::before { background: var(--azul-tint); }
+.cf-range-fill { background: var(--text); transform-origin: left center; transform: scaleX(var(--p, 0)); transition: transform 260ms var(--ease-out); }
+.cf-range input { position: relative; width: 100%; height: 44px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; }
+.cf-range input::-webkit-slider-runnable-track { height: 8px; background: transparent; }
+.cf-range input::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 32px; height: 32px; margin-top: -12px; border-radius: var(--r-sm);
+  background: var(--sol); border: 2px solid var(--navy); transition: transform var(--t-press) var(--ease-out);
+}
+.cf-range input::-moz-range-track { height: 8px; background: transparent; }
+.cf-range input::-moz-range-thumb { width: 28px; height: 28px; border-radius: var(--r-sm); background: var(--sol); border: 2px solid var(--navy); }
+.cf-range input:active::-webkit-slider-thumb { transform: scale(0.92); }
+.cf-range input:focus-visible { outline: none; }
+.cf-range input:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--focus); outline-offset: 2px; }
+.cf-range input:focus-visible::-moz-range-thumb { outline: 2px solid var(--focus); outline-offset: 2px; }
+html:not(.js) .cf-range { display: none; }
+
+.cf-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.cf-step {
+  display: flex; align-items: center; gap: 8px; min-height: 44px; width: 100%; text-align: left;
+  font-size: 15px; line-height: 20px; font-weight: 600; color: var(--text-muted); cursor: pointer;
+  border-radius: var(--r-sm); transition: color var(--t-hover) ease;
+}
+.cf-step[aria-current="step"] { color: var(--text); }
+.cf-step-n { flex: none; display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; background: var(--azul-tint); color: var(--text); font-size: 13px; }
+.js .cf-step-text { display: none; }
+.cf-step-text { font-size: 14px; line-height: 20px; color: var(--text); margin-top: 4px; }
+@media (max-width: 479px) { .cf-steps { grid-template-columns: 1fr; gap: 0; } }
+
+/* Paneles: sin JS se ven los tres apilados; con JS, uno a la vez con crossfade. */
+.cf-panels { width: min(100%, 400px); display: grid; gap: 16px; }
+.js .cf-panel {
+  grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity var(--t-ui) var(--ease-out), transform 280ms var(--ease-out), visibility 0s 280ms;
+}
+.js .cf-panel[data-active] { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+@media (prefers-reduced-motion: reduce) { .js .cf-panel { transform: none; } }
+
+/* Fragmentos de la app (data-ui) */
+.app { background: var(--surface); color: var(--text); border-radius: var(--r-lg); padding: 20px; min-width: 0; }
+.app-label { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--text-muted); margin-bottom: 12px; }
+.app-title { font-size: 20px; line-height: 28px; font-weight: 700; }
+.app-field-label { display: block; font-size: 14px; line-height: 20px; font-weight: 600; margin: 12px 0 6px; }
+.app-input {
+  width: 100%; height: 48px; padding: 0 12px; border-radius: var(--r-sm); font-size: 16px;
+  background: var(--surface); color: var(--text); border: 2px solid var(--control-border);
+  transition: border-color var(--t-hover) ease;
+}
+.app-input:focus-visible { border-color: var(--azul-text); }
+.app-fake { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 12px; border-radius: var(--r-sm); background: var(--bg); font-size: 15px; }
+.app-fake svg { color: var(--azul-text); }
+
+.bubble-wrap { position: relative; min-height: 150px; }
+.bubble { background: var(--bg); border-radius: var(--r-md) var(--r-md) var(--r-md) 4px; padding: 14px 16px; font-size: 15px; line-height: 22px; transform-origin: bottom left; }
+.bubble-pass { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; padding: 10px 12px; background: var(--surface); border-radius: var(--r-sm); }
+.typing { position: absolute; left: 0; top: 0; display: inline-flex; gap: 4px; padding: 14px 16px; background: var(--bg); border-radius: var(--r-md); opacity: 0; }
+.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); }
+.scan-ok { padding: 16px; border-radius: var(--r-md); background: var(--verde-tint); }
+.scan-ok .chip { background: var(--surface); }
+.notif { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; padding: 12px 14px; border-radius: var(--r-md); background: var(--bg); font-size: 15px; line-height: 22px; }
+.notif svg { flex: none; margin-top: 2px; color: var(--azul-text); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .cf-panel[data-active] .typing { animation: typing-life 900ms ease both; }
+  .js .cf-panel[data-active] .typing i { animation: typing-dot 300ms ease-in-out 3 alternate; }
+  .js .cf-panel[data-active] .typing i:nth-child(2) { animation-delay: 100ms; }
+  .js .cf-panel[data-active] .typing i:nth-child(3) { animation-delay: 200ms; }
+  .js .cf-panel[data-active] .bubble { animation: bubble-in 320ms var(--ease-out) 760ms both; }
+  .js .cf-panel[data-active] .scan-ok .chip { animation: pass-chip-in 320ms var(--ease-out) 200ms both; }
+  .js .cf-panel[data-active] .notif { animation: notif-in 360ms var(--ease-out) 620ms both; }
+}
+@keyframes typing-life { 0% { opacity: 0; } 15%, 80% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes typing-dot { to { transform: translateY(-3px); opacity: 0.5; } }
+@keyframes bubble-in { from { opacity: 0; transform: translateY(6px) scale(0.97); } }
+@keyframes notif-in { from { opacity: 0; transform: translateY(-8px); } }
