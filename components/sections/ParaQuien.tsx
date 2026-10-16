@@ -42,7 +42,7 @@ function Busqueda() {
 }
 
 function Detalle() {
-  const rows = [["Ingreso", "Sáb 18, 10:04 h"], ["Visita", "Juan Pérez"], ["Autorizó", "Unidad 4°B"], ["Validó", "Portería, entrada principal"]];
+  const rows = [["Ingreso", "Sáb 18, 10:04 h"], ["Visita", "Juan Pérez"], ["Autorizó", "Unidad 4°B"], ["Validó", "Portería, entrada principal"]];
   return (
     <dl className="detalle" data-ui data-inview aria-hidden>
       {rows.map(([k, v], n) => (
@@ -57,7 +57,7 @@ function AvisoVecino() {
     <div className="vnotif" data-ui data-inview aria-hidden>
       <div className="vnotif-card">
         <span className="vnotif-ic"><Bell size={18} strokeWidth={2} /></span>
-        <div><p className="font-semibold">Juan Pérez llegó</p><p className="t-small text-ink-muted">Entrada principal · 10:04 h</p></div>
+        <div><p className="font-semibold">Juan Pérez llegó</p><p className="t-small text-ink-muted">Entrada principal · 10:04&nbsp;h</p></div>
       </div>
     </div>
   );

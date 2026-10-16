@@ -50,18 +50,18 @@ export function ComoFunciona() {
               onChange={(e) => setNombre(e.target.value)}
             />
             <p className="app-field-label">Horario</p>
-            <p className="app-fake"><CalendarClock size={18} strokeWidth={2} aria-hidden />Sáb 18, de 10 a 12 h</p>
+            <p className="app-fake"><CalendarClock size={18} strokeWidth={2} aria-hidden />Sáb 18, de 10 a 12&nbsp;h</p>
             <p className="app-field-label">Motivo</p>
             <p className="app-fake">Plomero para la unidad 4°B</p>
             <button type="button" className="btn btn-primary w-full mt-5" onClick={() => go(1)}>Invitar</button>
           </div>
 
           <div className="cf-panel app" data-ui data-active={step === 1 || undefined}>
-            <p className="app-label">Mensaje de Pazzit</p>
+            <p className="app-label">Mensaje de <span translate="no">Pazzit</span></p>
             <div className="bubble-wrap">
               <span className="typing" aria-hidden><i /><i /><i /></span>
               <div className="bubble">
-                <p>Hola{primer ? ` ${primer}` : ""}, te esperan el sáb 18 de 10 a 12 h en la unidad 4°B. Este es tu pase:</p>
+                <p>Hola{primer ? ` ${primer}` : ""}, te esperan el sáb 18 de 10 a 12&nbsp;h en la unidad 4°B. Este es tu pase:</p>
                 <p className="bubble-pass">
                   <span className="font-semibold truncate">Pase de {quien}</span>
                   <span className="chip chip-inv">Invitado</span>
@@ -76,7 +76,7 @@ export function ComoFunciona() {
             <div className="scan-ok">
               <span className="chip chip-ok"><Check strokeWidth={2.5} aria-hidden />Validado</span>
               <p className="app-title mt-3 truncate">{quien}</p>
-              <p className="t-small text-ink-muted">Unidad 4°B · Sáb 18, 10:04 h</p>
+              <p className="t-small text-ink-muted">Unidad 4°B · Sáb 18, 10:04&nbsp;h</p>
             </div>
             <p className="notif"><Bell size={18} strokeWidth={2} aria-hidden /><span className="notif-text">Le avisamos a la 4°B: <strong className="font-semibold">{quien} llegó.</strong></span></p>
             <button type="button" className="btn btn-secondary w-full mt-5" onClick={() => go(0)}>Invitar a otra persona</button>

@@ -109,6 +109,7 @@
     background: var(--bg);
     color: var(--text);
     -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
     scroll-padding-top: calc(var(--header-h) + 16px);
   }
   body {
@@ -431,6 +432,7 @@ html:not(.js) .cf-range { display: none; }
   border-radius: var(--r-sm); transition: color var(--t-hover) var(--ease-out);
 }
 .cf-step[aria-current="step"] { color: var(--text); }
+@media (hover: hover) and (pointer: fine) { .cf-step:hover { color: var(--text); } }
 @media (prefers-reduced-motion: no-preference) {
   .cf-step { transition: color var(--t-hover) var(--ease-out), transform var(--t-press) var(--ease-out); transform-origin: left center; }
   .cf-steps li:nth-child(2) .cf-step { transform-origin: center; }
@@ -519,6 +521,7 @@ html:not(.js) .cf-range { display: none; }
   .mod-text .t-body { font-size: 20px; line-height: 30px; }
 }
 
+.reg, .srch-res, .detalle { font-variant-numeric: tabular-nums; }
 .reg { width: 100%; min-width: 340px; border-collapse: collapse; font-size: 14px; line-height: 20px; }
 .reg th { text-align: left; font-size: 13px; font-weight: 600; color: var(--text-muted); padding: 0 8px 8px; }
 .reg td { padding: 8px; border-top: 1px solid var(--line); white-space: nowrap; }
@@ -682,6 +685,7 @@ html:not(.js) .cf-range { display: none; }
   border: 2px solid #7480B8; font-weight: 600; color: #E6ECFF;
   transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out), border-color var(--t-hover) var(--ease-out);
 }
+@media (hover: hover) and (pointer: fine) { .rol-opt:hover span { border-color: #A6B0D6; } }
 .rol-opt input:checked + span { background: #E6ECFF; color: var(--navy); border-color: #E6ECFF; }
 .rol-opt input:focus-visible + span { outline: 2px solid #FFC933; outline-offset: 2px; }
 .rol-opt input[aria-invalid="true"] + span { border-color: #FF8A7A; }

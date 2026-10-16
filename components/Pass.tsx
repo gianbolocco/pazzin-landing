@@ -41,7 +41,7 @@ export function Pass({ className = "", ...rest }: Props) {
           </span>
           <span className="pass-nombre">Juan Pérez</span>
           <span className="pass-motivo">Plomero para la unidad 4°B</span>
-          <span className="pass-hora"><CalendarClock size={16} strokeWidth={2} aria-hidden />Sáb 18, de 10 a 12 h</span>
+          <span className="pass-hora"><CalendarClock size={16} strokeWidth={2} aria-hidden />Sáb 18, de 10 a 12&nbsp;h</span>
         </div>
         <svg className="pass-cut" viewBox="0 0 4 100" preserveAspectRatio="none" aria-hidden>
           <line className="pass-cut-base" x1="2" y1="2" x2="2" y2="98" />

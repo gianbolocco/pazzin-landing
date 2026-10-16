@@ -16,12 +16,12 @@ export function Seguridad() {
           <p className="t-lead mt-4 max-w-[34ch]">Cuidamos el acceso a tu edificio y los datos de quienes entran.</p>
           <div className="venc app mt-8" data-ui data-inview aria-hidden>
             <p className="app-label">Pase de Fumigación · SUM</p>
-            <p className="app-title">Sáb 18, de 8 a 9 h</p>
+            <p className="app-title">Sáb 18, de 8 a 9&nbsp;h</p>
             <span className="venc-chips mt-3">
               <span className="chip chip-ok venc-a"><Check strokeWidth={2.5} />Válido</span>
               <span className="chip chip-stop venc-b"><TimerOff strokeWidth={2} />Vencido</span>
             </span>
-            <p className="t-small text-ink-muted mt-3">Pasadas las 9 h, el QR ya no sirve para entrar.</p>
+            <p className="t-small text-ink-muted mt-3">Pasadas las 9&nbsp;h, el QR ya no sirve para entrar.</p>
           </div>
         </div>
         <dl className="lg:col-span-7 flex flex-col gap-8 lg:pt-3">
