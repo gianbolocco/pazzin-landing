@@ -243,10 +243,16 @@
 }
 @media (hover: hover) and (pointer: fine) { .nav-link:hover { background: var(--azul-tint); } }
 
-.theme-btn svg { grid-area: 1 / 1; transition: opacity var(--t-ui) var(--ease-out), transform var(--t-ui) var(--ease-out); }
-.theme-btn .i-sun { opacity: 0; transform: rotate(-45deg) scale(0.8); }
-.theme-btn[data-dark] .i-moon { opacity: 0; transform: rotate(45deg) scale(0.8); }
-.theme-btn[data-dark] .i-sun { opacity: 1; transform: none; }
+.theme-btn svg { grid-area: 1 / 1; transition: opacity var(--t-ui) var(--ease-out); }
+.theme-btn .i-sun { opacity: 0; }
+.theme-btn[data-dark] .i-moon { opacity: 0; }
+.theme-btn[data-dark] .i-sun { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .theme-btn svg { transition: opacity var(--t-ui) var(--ease-out), transform var(--t-ui) var(--ease-out); }
+  .theme-btn .i-sun { transform: rotate(-45deg) scale(0.8); }
+  .theme-btn[data-dark] .i-moon { transform: rotate(45deg) scale(0.8); }
+  .theme-btn[data-dark] .i-sun { transform: none; }
+}
 
 /* ---------- Menú móvil ---------- */
 .mnav summary { list-style: none; }
@@ -267,8 +273,13 @@
 /* ---------- Footer ---------- */
 .footer-menu { display: flex; flex-direction: column; gap: 12px; }
 .footer-menu a { display: inline-flex; min-height: 44px; align-items: center; color: var(--text);
-  transition: transform var(--t-ui) var(--ease-out), color var(--t-hover) ease; }
+  transition: color var(--t-hover) ease; }
+@media (prefers-reduced-motion: no-preference) {
+  .footer-menu a { transition: transform var(--t-ui) var(--ease-out), color var(--t-hover) ease; }
+}
 @media (hover: hover) and (pointer: fine) {
   .footer-menu:hover a:not(:hover) { color: var(--text-muted); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .footer-menu a:hover { transform: translateX(12px); }
 }
