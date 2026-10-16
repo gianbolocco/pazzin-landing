@@ -110,7 +110,7 @@ export function DemoForm() {
         <input id="f-website" name="website" tabIndex={-1} autoComplete="off" value={f.empresa} onChange={(e) => set("empresa", e.target.value)} />
       </div>
 
-      {summaryCount > 0 && <p role="alert" className="form-summary">Revisá {summaryCount === 1 ? "1 campo" : `${summaryCount} campos`}.</p>}
+      {summaryCount > 0 && Object.keys(errors).length > 0 && <p role="alert" className="form-summary">Revisá {summaryCount === 1 ? "1 campo" : `${summaryCount} campos`}.</p>}
       {status === "error" && (
         <p role="alert" className="form-summary">No pudimos enviarlo. Probá de nuevo o escribinos a {site.email}.</p>
       )}
