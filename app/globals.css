@@ -187,7 +187,7 @@
     border-radius: var(--r-md); color: var(--text); cursor: pointer;
     transition: background-color var(--t-hover) var(--ease-out), transform var(--t-press) var(--ease-out);
   }
-  .icon-btn:active { transform: scale(0.94); }
+  .icon-btn:active { transform: scale(0.96); }
   @media (hover: hover) and (pointer: fine) { .icon-btn:hover { background: var(--azul-tint); } }
 
   .link {
@@ -431,6 +431,12 @@ html:not(.js) .cf-range { display: none; }
   border-radius: var(--r-sm); transition: color var(--t-hover) var(--ease-out);
 }
 .cf-step[aria-current="step"] { color: var(--text); }
+@media (prefers-reduced-motion: no-preference) {
+  .cf-step { transition: color var(--t-hover) var(--ease-out), transform var(--t-press) var(--ease-out); transform-origin: left center; }
+  .cf-steps li:nth-child(2) .cf-step { transform-origin: center; }
+  .cf-steps li:nth-child(3) .cf-step { transform-origin: right center; }
+  .cf-step:active { transform: scale(0.97); }
+}
 .js .cf-step-text { display: none; }
 .cf-step-text { font-size: 14px; line-height: 20px; color: var(--text); margin-top: 4px; }
 @media (max-width: 479px) { .cf-steps { grid-template-columns: 1fr; gap: 0; } }
@@ -640,6 +646,7 @@ html:not(.js) .cf-range { display: none; }
 }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary h3 { transition: color var(--t-hover) var(--ease-out); }
+.faq summary:active h3 { color: var(--azul-text); } /* respuesta al presionar, también en táctil */
 .faq-chev { flex: none; color: var(--azul-text); }
 .faq[open] .faq-chev { transform: rotate(180deg); }
 @media (prefers-reduced-motion: no-preference) {
