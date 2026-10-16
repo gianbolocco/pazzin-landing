@@ -476,10 +476,11 @@ html:not(.js) .cf-range { display: none; }
 
 .bubble-wrap { position: relative; }
 .bubble { background: var(--bg); border-radius: var(--r-md) var(--r-md) var(--r-md) 4px; padding: 14px 16px; font-size: 16px; line-height: 24px; transform-origin: bottom left; overflow-wrap: anywhere; }
-.bubble-pass { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; padding: 10px 12px; background: var(--surface); border-radius: var(--r-sm); }
+.bubble-pass { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; padding: 10px 12px; background: var(--surface); border-radius: var(--r-sm); }
+.bubble-pass .chip { flex: none; }
 .typing { position: absolute; left: 0; top: 0; display: inline-flex; gap: 4px; padding: 14px 16px; background: var(--bg); border-radius: var(--r-md); opacity: 0; }
 .typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); }
-.scan-ok { padding: 16px; border-radius: var(--r-md); background: var(--verde-tint); }
+.scan-ok { overflow-wrap: anywhere; padding: 16px; border-radius: var(--r-md); background: var(--verde-tint); }
 .scan-ok .chip { background: var(--surface); }
 .notif { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; padding: 12px 14px; border-radius: var(--r-md); background: var(--bg); font-size: 16px; line-height: 24px; }
 .notif-text { min-width: 0; overflow-wrap: anywhere; }

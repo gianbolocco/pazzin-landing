@@ -63,7 +63,7 @@ export function ComoFunciona() {
               <div className="bubble">
                 <p>Hola{primer ? ` ${primer}` : ""}, te esperan el sáb 18 de 10 a 12&nbsp;h en la unidad 4°B. Este es tu pase:</p>
                 <p className="bubble-pass">
-                  <span className="font-semibold truncate">Pase de {quien}</span>
+                  <span className="font-semibold min-w-0">Pase de {quien}</span>
                   <span className="chip chip-inv">Invitado</span>
                 </p>
               </div>
@@ -75,7 +75,7 @@ export function ComoFunciona() {
             <p className="app-label">Portería · Entrada principal</p>
             <div className="scan-ok">
               <span className="chip chip-ok"><Check strokeWidth={2.5} aria-hidden />Validado</span>
-              <p className="app-title mt-3 truncate">{quien}</p>
+              <p className="app-title mt-3">{quien}</p>
               <p className="t-small text-ink-muted">Unidad 4°B · Sáb 18, 10:04&nbsp;h</p>
             </div>
             <p className="notif"><Bell size={18} strokeWidth={2} aria-hidden /><span className="notif-text">Le avisamos a la 4°B: <strong className="font-semibold">{quien} llegó.</strong></span></p>

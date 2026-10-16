@@ -19,7 +19,7 @@ export function Footer() {
             ))}
           </ul>
         </nav>
-        <div className="grid gap-8 sm:grid-cols-2 mt-14">
+        <div className="grid gap-8 sm:grid-cols-2 mt-14 [overflow-wrap:anywhere]">
           <div>
             <h2 className="t-small font-semibold text-ink-muted">Contacto</h2>
             {isSet(site.email)
