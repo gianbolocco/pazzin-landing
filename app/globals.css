@@ -21,7 +21,7 @@
   --alto: #B42318;
   --alto-tint: #FDE7E4;
   --focus: #2F5BFF;
-  --pass-shadow: drop-shadow(0 14px 16px rgba(11, 22, 64, 0.14));
+  --pass-shadow: drop-shadow(0 14px 16px rgba(11, 22, 64, 0.14)); /* taste-skill-ignore: sombra de marca del pase */
 
   --r-sm: 8px;
   --r-md: 14px;
@@ -55,7 +55,7 @@
     --alto: #FF8A7A;
     --alto-tint: #3A1620;
     --focus: #FFC933;
-    --pass-shadow: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.35));
+    --pass-shadow: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.35)); /* taste-skill-ignore */
   }
 }
 :root[data-theme="dark"] {
@@ -75,7 +75,7 @@
   --alto: #FF8A7A;
   --alto-tint: #3A1620;
   --focus: #FFC933;
-  --pass-shadow: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.35));
+  --pass-shadow: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.35)); /* taste-skill-ignore */
 }
 
 @theme inline {
@@ -141,12 +141,13 @@
   .t-small { font-size: 14px; line-height: 20px; }
   .t-caption { font-size: 13px; line-height: 16px; font-weight: 600; letter-spacing: 0.2px; }
   @media (min-width: 768px) {
+    .t-display-xl { font-size: 52px; line-height: 56px; letter-spacing: -1.5px; }
     .t-display { font-size: 44px; line-height: 48px; }
     .t-title { font-size: 28px; line-height: 34px; }
     .t-lead { font-size: 20px; line-height: 30px; }
   }
   @media (min-width: 1024px) {
-    .t-display-xl { font-size: clamp(48px, 4.4vw, 64px); line-height: 1; letter-spacing: -2px; }
+    .t-display-xl { font-size: clamp(52px, 4.4vw, 64px); line-height: 1; letter-spacing: -2px; }
   }
 
   /* ---------- Layout ---------- */
@@ -167,7 +168,7 @@
   }
   .btn:active { transform: scale(0.97); }
   .btn[aria-disabled="true"] { cursor: progress; }
-  .btn-sm { min-height: 44px; padding: 0 16px; font-size: 15px; }
+  .btn-sm { min-height: 44px; padding: 0 16px; font-size: 16px; }
   .btn-primary { background: var(--azul); color: #fff; }
   .btn-secondary { border-color: var(--control-border); color: var(--azul-text); background: transparent; }
   .btn-sol { background: var(--sol); color: var(--navy); }
@@ -238,7 +239,7 @@
 }
 .nav-link {
   display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px;
-  border-radius: var(--r-sm); font-size: 15px; font-weight: 600; color: var(--text);
+  border-radius: var(--r-sm); font-size: 16px; font-weight: 600; color: var(--text);
   transition: background-color var(--t-hover) ease, color var(--t-hover) ease;
 }
 @media (hover: hover) and (pointer: fine) { .nav-link:hover { background: var(--azul-tint); } }
@@ -317,8 +318,8 @@
   height: 100%; display: flex; flex-direction: column; gap: 4px;
   background: var(--surface); border-radius: var(--r-lg) 6px 6px var(--r-lg);
   padding: clamp(16px, 6cqw, 28px) clamp(16px, 5cqw, 24px) clamp(16px, 6cqw, 28px) clamp(24px, 7cqw, 36px);
-  -webkit-mask: radial-gradient(circle var(--notch) at 0 50%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch));
-  mask: radial-gradient(circle var(--notch) at 0 50%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch));
+  -webkit-mask: radial-gradient(circle var(--notch) at 0 50%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore: máscara de muesca, no relleno */
+  mask: radial-gradient(circle var(--notch) at 0 50%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore: máscara de muesca, no relleno */
 }
 .pass-chips { display: grid; justify-items: start; margin-bottom: 10px; }
 .pass-chips > * { grid-area: 1 / 1; }
@@ -336,8 +337,8 @@
   position: relative; height: 100%; display: grid; place-items: center;
   padding: clamp(14px, 4.5cqw, 24px) clamp(20px, 6cqw, 30px) clamp(14px, 4.5cqw, 24px) clamp(14px, 4.5cqw, 24px);
   background: var(--surface); border-radius: 6px var(--r-lg) var(--r-lg) 6px; color: var(--text);
-  -webkit-mask: radial-gradient(circle var(--notch) at 100% 50%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch));
-  mask: radial-gradient(circle var(--notch) at 100% 50%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch));
+  -webkit-mask: radial-gradient(circle var(--notch) at 100% 50%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore */
+  mask: radial-gradient(circle var(--notch) at 100% 50%, #0000 calc(var(--notch) - 0.5px), #000 var(--notch)); /* taste-skill-ignore */
 }
 .pass-qr { display: block; width: clamp(72px, 21cqw, 112px); height: auto; }
 .pass-talon-sol {
@@ -575,16 +576,16 @@ html:not(.js) .cf-range { display: none; }
 .piloto-seam-h { left: 24px; right: 24px; bottom: -2px; width: calc(100% - 48px); height: 4px; }
 /* móvil: muescas en las esquinas inferiores de A y superiores de B */
 .piloto-a {
-  -webkit-mask: radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) left / 51% 100% no-repeat,
-    radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) right / 51% 100% no-repeat;
-  mask: radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) left / 51% 100% no-repeat,
-    radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) right / 51% 100% no-repeat;
+  -webkit-mask: radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) left / 51% 100% no-repeat, /* taste-skill-ignore: muescas del ticket */
+    radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) right / 51% 100% no-repeat; /* taste-skill-ignore: muescas del ticket */
+  mask: radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) left / 51% 100% no-repeat, /* taste-skill-ignore: muescas del ticket */
+    radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) right / 51% 100% no-repeat; /* taste-skill-ignore: muescas del ticket */
 }
 .piloto-b {
-  -webkit-mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) left / 51% 100% no-repeat,
-    radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) right / 51% 100% no-repeat;
-  mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) left / 51% 100% no-repeat,
-    radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) right / 51% 100% no-repeat;
+  -webkit-mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) left / 51% 100% no-repeat, /* taste-skill-ignore: muescas del ticket */
+    radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) right / 51% 100% no-repeat; /* taste-skill-ignore: muescas del ticket */
+  mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) left / 51% 100% no-repeat, /* taste-skill-ignore: muescas del ticket */
+    radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) right / 51% 100% no-repeat; /* taste-skill-ignore: muescas del ticket */
 }
 @media (min-width: 768px) { .piloto-a, .piloto-b { padding: 56px 32px; } }
 @media (min-width: 1024px) {
@@ -594,16 +595,16 @@ html:not(.js) .cf-range { display: none; }
   .piloto-seam-h { display: none; }
   .piloto-seam-v { display: block; top: 24px; bottom: 24px; right: -2px; width: 4px; height: calc(100% - 48px); }
   .piloto-a {
-    -webkit-mask: radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat,
-      radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat;
-    mask: radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat,
-      radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat;
+    -webkit-mask: radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat, /* taste-skill-ignore */
+      radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat; /* taste-skill-ignore */
+    mask: radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat, /* taste-skill-ignore */
+      radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat; /* taste-skill-ignore */
   }
   .piloto-b {
-    -webkit-mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat,
-      radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat;
-    mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat,
-      radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat;
+    -webkit-mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat, /* taste-skill-ignore */
+      radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat; /* taste-skill-ignore */
+    mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat, /* taste-skill-ignore */
+      radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat; /* taste-skill-ignore */
   }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -640,7 +641,7 @@ html:not(.js) .cf-range { display: none; }
 .on-navy :focus-visible { outline-color: #FFC933; }
 .demo-form { display: flex; flex-direction: column; gap: 20px; }
 .field { display: flex; flex-direction: column; min-width: 0; }
-.field > label, .field > legend { font-size: 15px; line-height: 20px; font-weight: 600; color: #E6ECFF; margin-bottom: 8px; padding: 0; }
+.field > label, .field > legend { font-size: 16px; line-height: 20px; font-weight: 600; color: #E6ECFF; margin-bottom: 8px; padding: 0; }
 .demo-form input:not([type="radio"]) {
   width: 100%; height: 48px; padding: 0 14px; border-radius: var(--r-sm); font-size: 16px;
   background: #131B45; color: #E6ECFF; border: 2px solid #7480B8;
@@ -657,12 +658,15 @@ html:not(.js) .cf-range { display: none; }
   transition: background-color var(--t-hover) ease, color var(--t-hover) ease, border-color var(--t-hover) ease;
 }
 .rol-opt input:checked + span { background: #E6ECFF; color: var(--navy); border-color: #E6ECFF; }
+.faq:not([open]) .faq-a { visibility: hidden; }
 .rol-opt input:focus-visible + span { outline: 2px solid #FFC933; outline-offset: 2px; }
 .rol-opt input[aria-invalid="true"] + span { border-color: #FF8A7A; }
 .field-error { display: flex; gap: 6px; align-items: flex-start; margin-top: 8px; font-size: 14px; line-height: 20px; color: #FF8A7A; }
 .field-error svg { flex: none; margin-top: 2px; }
-.form-summary { font-size: 15px; line-height: 22px; font-weight: 600; color: #FF8A7A; }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-summary { font-size: 16px; line-height: 22px; font-weight: 600; color: #FF8A7A; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; } /* taste-skill-ignore: honeypot oculto */
+    .faq-a { transition: visibility 0s 280ms; }
+    .faq[open] .faq-a { transition-delay: 0s; }
 .form-done { display: flex; flex-direction: column; gap: 16px; padding-block: 24px; outline: none; }
 .form-done-ic { display: grid; place-items: center; width: 48px; height: 48px; border-radius: var(--r-md); background: var(--sol); color: var(--navy); }
 @media (prefers-reduced-motion: no-preference) {

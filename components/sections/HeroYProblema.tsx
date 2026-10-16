@@ -11,7 +11,7 @@ export function HeroYProblema() {
   return (
     <div className="wrap hero-grid">
       <section aria-labelledby="hero-title" className="hero-text">
-        <h1 id="hero-title" className="t-display-xl max-w-[12ch]">Tus visitas entran sin vueltas.</h1>
+        <h1 id="hero-title" className="t-display-xl max-w-[12ch] md:max-w-[14ch]">Tus visitas entran sin vueltas.</h1>
         <p className="t-lead mt-6 max-w-[38ch]">
           El vecino invita, la visita recibe su pase por WhatsApp y la portería lo valida con un escaneo. Sin cuaderno, sin llamadas, todo registrado.
         </p>

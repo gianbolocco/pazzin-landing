@@ -12,7 +12,7 @@ const REGISTRO = [
 
 function Registro() {
   return (
-    <table className="reg" data-inview>
+    <table className="reg" data-ui data-inview>
       <caption className="sr-only">Registro de ingresos del sábado 18 (datos de ejemplo)</caption>
       <thead>
         <tr><th scope="col">Hora</th><th scope="col">Visita</th><th scope="col">Unidad</th><th scope="col">Estado</th></tr>
@@ -31,7 +31,7 @@ function Registro() {
 
 function Busqueda() {
   return (
-    <div className="srch" data-inview aria-hidden>
+    <div className="srch" data-ui data-inview aria-hidden>
       <p className="srch-box"><Search size={18} strokeWidth={2} /><span className="srch-q">4°B</span></p>
       <ul className="srch-res">
         <li style={i(0)}><span>Sáb 18 · 10:04</span><span className="font-semibold">Juan Pérez</span><span className="chip chip-ok">Validado</span></li>
@@ -44,7 +44,7 @@ function Busqueda() {
 function Detalle() {
   const rows = [["Ingreso", "Sáb 18, 10:04 h"], ["Visita", "Juan Pérez"], ["Autorizó", "Unidad 4°B"], ["Validó", "Portería, entrada principal"]];
   return (
-    <dl className="detalle" data-inview aria-hidden>
+    <dl className="detalle" data-ui data-inview aria-hidden>
       {rows.map(([k, v], n) => (
         <div key={k} style={i(n)}><dt>{k}</dt><dd>{v}</dd></div>
       ))}
@@ -54,7 +54,7 @@ function Detalle() {
 
 function AvisoVecino() {
   return (
-    <div className="vnotif" data-inview aria-hidden>
+    <div className="vnotif" data-ui data-inview aria-hidden>
       <div className="vnotif-card">
         <span className="vnotif-ic"><Bell size={18} strokeWidth={2} /></span>
         <div><p className="font-semibold">Juan Pérez llegó</p><p className="t-small text-ink-muted">Entrada principal · 10:04 h</p></div>
@@ -65,7 +65,7 @@ function AvisoVecino() {
 
 function Escaneo() {
   return (
-    <div className="scan" data-inview aria-hidden>
+    <div className="scan" data-ui data-inview aria-hidden>
       <div className="scan-frame"><span /><span /><span /><span /></div>
       <div>
         <span className="chip chip-ok"><Check strokeWidth={2.5} />Validado</span>

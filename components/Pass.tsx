@@ -29,6 +29,7 @@ export function Pass({ className = "", ...rest }: Props) {
     <div
       className={`pass ${className}`}
       role="img"
+      data-ui
       aria-label="Pase de visita de Juan Pérez, plomero para la unidad 4°B, sábado 18 de 10 a 12 h. Estado: validado."
       {...rest}
     >
