@@ -563,3 +563,74 @@ html:not(.js) .cf-range { display: none; }
   .js .venc:not(.is-in) .venc-a { opacity: 1; transform: none; }
   .js .venc:not(.is-in) .venc-b { opacity: 0; transform: translateY(4px); }
 }
+
+/* ---------- Piloto: dos campos con costura de ticket ---------- */
+.piloto { display: grid; margin-block: 48px; }
+.piloto-a, .piloto-b { position: relative; display: flex; flex-direction: column; padding: 48px 16px; }
+.piloto-a { background: var(--azul-tint); color: var(--text); }
+.piloto-b { background: var(--azul); color: #fff; }
+.piloto-seam { position: absolute; overflow: visible; }
+.piloto-seam line { stroke: var(--azul); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.1 8; vector-effect: non-scaling-stroke; }
+.piloto-seam-v { display: none; }
+.piloto-seam-h { left: 24px; right: 24px; bottom: -2px; width: calc(100% - 48px); height: 4px; }
+/* móvil: muescas en las esquinas inferiores de A y superiores de B */
+.piloto-a {
+  -webkit-mask: radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) left / 51% 100% no-repeat,
+    radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) left / 51% 100% no-repeat,
+    radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) right / 51% 100% no-repeat;
+}
+.piloto-b {
+  -webkit-mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) left / 51% 100% no-repeat,
+    radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) left / 51% 100% no-repeat,
+    radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) right / 51% 100% no-repeat;
+}
+@media (min-width: 768px) { .piloto-a, .piloto-b { padding: 56px 32px; } }
+@media (min-width: 1024px) {
+  .piloto { grid-template-columns: 5fr 7fr; min-height: 560px; margin-block: 96px; }
+  .piloto-a { padding: 72px 64px 72px max(32px, calc((100vw - 1200px) / 2)); }
+  .piloto-b { padding: 72px max(32px, calc((100vw - 1200px) / 2)) 72px 64px; }
+  .piloto-seam-h { display: none; }
+  .piloto-seam-v { display: block; top: 24px; bottom: 24px; right: -2px; width: 4px; height: calc(100% - 48px); }
+  .piloto-a {
+    -webkit-mask: radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat,
+      radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat;
+    mask: radial-gradient(circle 16px at 100% 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat,
+      radial-gradient(circle 16px at 100% 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat;
+  }
+  .piloto-b {
+    -webkit-mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat,
+      radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat;
+    mask: radial-gradient(circle 16px at 0 0, #0000 15.5px, #000 16px) top / 100% 51% no-repeat,
+      radial-gradient(circle 16px at 0 100%, #0000 15.5px, #000 16px) bottom / 100% 51% no-repeat;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .piloto-seam { transition: clip-path 800ms var(--ease-out) 200ms; }
+  .js .piloto:not(.is-in) .piloto-seam-v { clip-path: inset(0 0 100% 0); }
+  .js .piloto:not(.is-in) .piloto-seam-h { clip-path: inset(0 100% 0 0); }
+}
+
+/* ---------- Preguntas: acordeón nativo ---------- */
+.faq { background: var(--surface); border-radius: var(--r-md); }
+.faq summary {
+  list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 64px; padding: 16px 20px; cursor: pointer; border-radius: var(--r-md);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary h3 { transition: color var(--t-hover) ease; }
+.faq-chev { flex: none; color: var(--azul-text); }
+.faq[open] .faq-chev { transform: rotate(180deg); }
+@media (prefers-reduced-motion: no-preference) {
+  .faq-chev { transition: transform var(--t-ui) var(--ease-out); }
+}
+.faq-a { padding: 0 20px 20px; max-width: 65ch; }
+@media (hover: hover) and (pointer: fine) { .faq summary:hover h3 { color: var(--azul-text); } }
+@supports (interpolate-size: allow-keywords) {
+  @media (prefers-reduced-motion: no-preference) {
+    .faq { interpolate-size: allow-keywords; }
+    .faq::details-content { height: 0; overflow: clip; transition: height 280ms var(--ease-out), content-visibility 280ms allow-discrete; }
+    .faq[open]::details-content { height: auto; }
+  }
+}

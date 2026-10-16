@@ -3,6 +3,8 @@ import { HeroYProblema } from "@/components/sections/HeroYProblema";
 import { ComoFunciona } from "@/components/sections/ComoFunciona";
 import { ParaQuien } from "@/components/sections/ParaQuien";
 import { Seguridad } from "@/components/sections/Seguridad";
+import { Piloto } from "@/components/sections/Piloto";
+import { Preguntas } from "@/components/sections/Preguntas";
 import { Footer } from "@/components/sections/Footer";
 import { InView } from "@/components/InView";
 
@@ -15,6 +17,8 @@ export default function Page() {
         <ComoFunciona />
         <ParaQuien />
         <Seguridad />
+        <Piloto />
+        <Preguntas />
       </main>
       <Footer />
       <InView />
