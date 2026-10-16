@@ -166,7 +166,7 @@
       border-color var(--t-hover) ease, color var(--t-hover) ease;
   }
   .btn:active { transform: scale(0.97); }
-  .btn:disabled { cursor: progress; }
+  .btn[aria-disabled="true"] { cursor: progress; }
   .btn-sm { min-height: 44px; padding: 0 16px; font-size: 15px; }
   .btn-primary { background: var(--azul); color: #fff; }
   .btn-secondary { border-color: var(--control-border); color: var(--azul-text); background: transparent; }

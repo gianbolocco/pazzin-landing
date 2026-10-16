@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Check, CircleAlert } from "lucide-react";
 import { FIELD_ORDER, ROLES, submit, validate, type Errors, type FieldKey, type Fields } from "@/lib/demo";
 import { site } from "@/lib/site";
@@ -10,6 +10,7 @@ export function DemoForm() {
   const [f, setF] = useState<Fields>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const [tried, setTried] = useState(false);
+  const [summaryCount, setSummaryCount] = useState(0);
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
   const formRef = useRef<HTMLFormElement>(null);
   const doneRef = useRef<HTMLDivElement>(null);
@@ -21,17 +22,20 @@ export function DemoForm() {
   }
   const revalidate = () => { if (tried) setErrors(validate(f)); };
 
+  useEffect(() => { if (status === "ok") doneRef.current?.focus(); }, [status]);
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
+    if (status === "sending") return;
     setTried(true);
     const errs = validate(f);
     setErrors(errs);
+    setSummaryCount(Object.keys(errs).length);
     const first = FIELD_ORDER.find((k) => errs[k]);
     if (first) { formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus(); return; }
     setStatus("sending");
     const r = await submit(f);
     setStatus(r);
-    if (r === "ok") requestAnimationFrame(() => doneRef.current?.focus());
   }
 
   const a11y = (k: FieldKey) => ({
@@ -42,7 +46,7 @@ export function DemoForm() {
     id: `f-${k}`, name: k, value: f[k], onBlur: revalidate,
     onChange: (e: { target: { value: string } }) => set(k, e.target.value), ...a11y(k),
   });
-  const Err = ({ k }: { k: FieldKey }) =>
+  const err = (k: FieldKey) =>
     errors[k] ? <p id={`e-${k}`} className="field-error"><CircleAlert size={16} strokeWidth={2} aria-hidden />{errors[k]}</p> : null;
 
   if (status === "ok") {
@@ -54,7 +58,6 @@ export function DemoForm() {
     );
   }
 
-  const n = Object.keys(errors).length;
   return (
     <form
       ref={formRef}
@@ -67,10 +70,10 @@ export function DemoForm() {
       <div className="field">
         <label htmlFor="f-nombre">Tu nombre</label>
         <input {...text("nombre")} autoComplete="name" />
-        <Err k="nombre" />
+        {err("nombre")}
       </div>
 
-      <fieldset className="field" aria-describedby={errors.rol ? "e-rol" : undefined}>
+      <fieldset className="field">
         <legend>Sos…</legend>
         <div className="rol-opts">
           {ROLES.map((r) => (
@@ -80,41 +83,42 @@ export function DemoForm() {
             </label>
           ))}
         </div>
-        <Err k="rol" />
+        {err("rol")}
       </fieldset>
 
       <div className="grid gap-5 sm:grid-cols-[1fr_200px]">
         <div className="field">
           <label htmlFor="f-lugar">Barrio o edificio</label>
           <input {...text("lugar")} autoComplete="organization" />
-          <Err k="lugar" />
+          {err("lugar")}
         </div>
         <div className="field">
           <label htmlFor="f-unidades">Unidades <span className="font-normal">(opcional)</span></label>
           <input {...text("unidades")} inputMode="numeric" autoComplete="off" />
-          <Err k="unidades" />
+          {err("unidades")}
         </div>
       </div>
 
       <div className="field">
         <label htmlFor="f-contacto">WhatsApp o email</label>
         <input {...text("contacto")} autoComplete="email" spellCheck={false} />
-        <Err k="contacto" />
+        {err("contacto")}
       </div>
 
       <div className="hp" aria-hidden>
-        <label htmlFor="f-empresa">Empresa</label>
-        <input id="f-empresa" name="empresa" tabIndex={-1} autoComplete="off" value={f.empresa} onChange={(e) => set("empresa", e.target.value)} />
+        <label htmlFor="f-website">No completar este campo</label>
+        <input id="f-website" name="website" tabIndex={-1} autoComplete="off" value={f.empresa} onChange={(e) => set("empresa", e.target.value)} />
       </div>
 
-      {tried && n > 0 && <p role="alert" className="form-summary">Revisá {n === 1 ? "1 campo" : `${n} campos`}.</p>}
+      {summaryCount > 0 && <p role="alert" className="form-summary">Revisá {summaryCount === 1 ? "1 campo" : `${summaryCount} campos`}.</p>}
       {status === "error" && (
         <p role="alert" className="form-summary">No pudimos enviarlo. Probá de nuevo o escribinos a {site.email}.</p>
       )}
 
-      <button type="submit" className="btn btn-sol w-full sm:w-auto sm:px-8" style={{ minHeight: 52 }} disabled={status === "sending"} aria-busy={status === "sending" || undefined}>
+      <button type="submit" className="btn btn-sol w-full sm:w-auto sm:px-8" style={{ minHeight: 52 }} aria-disabled={status === "sending" || undefined}>
         {status === "sending" ? "Enviando…" : "Pedí una demo"}
       </button>
+      <p className="sr-only" role="status">{status === "sending" ? "Enviando…" : ""}</p>
     </form>
   );
 }
