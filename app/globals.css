@@ -225,10 +225,10 @@
 }
 
 .skip {
-  position: absolute; left: 16px; top: -200px; z-index: 100;
+  position: absolute; left: 16px; top: 12px; transform: translateY(-200%); z-index: 100;
   background: var(--surface); color: var(--text); padding: 12px 16px; border-radius: var(--r-sm); font-weight: 600;
 }
-.skip:focus { top: 12px; }
+.skip:focus { transform: none; }
 
 /* ---------- Header ---------- */
 .site-header { position: sticky; top: 0; z-index: 50; background: var(--bg); }
@@ -521,6 +521,14 @@ html:not(.js) .cf-range { display: none; }
 .scan-frame span:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; border-radius: 0 8px 0 0; }
 .scan-frame span:nth-child(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; border-radius: 0 0 0 8px; }
 .scan-frame span:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; border-radius: 0 0 8px 0; }
+@media (max-width: 479px) {
+  .reg, .srch { min-width: 0; }
+  .reg th:first-child, .reg td:first-child { display: none; }
+  .reg th:nth-child(2), .reg td:nth-child(2) { padding-left: 0; }
+  .srch-res li { grid-template-columns: minmax(0, 1fr) auto; }
+  .srch-res li > span:first-child { display: none; }
+  .srch-res li > span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; }
+}
 
 /* ---------- Seguridad ---------- */
 .seg { background: var(--surface); padding-block: 48px; }
@@ -528,7 +536,7 @@ html:not(.js) .cf-range { display: none; }
 @media (min-width: 1024px) { .seg { padding-block: 96px; } }
 .venc-chips { display: grid; justify-items: start; }
 .venc-chips > * { grid-area: 1 / 1; }
-.venc-a { opacity: 0; transform: translateY(-4px); }
+.venc-a { opacity: 0; }
 
 /* ---------- Rituales: corren una vez al entrar; el reposo es el estado final ---------- */
 @media (prefers-reduced-motion: no-preference) {
