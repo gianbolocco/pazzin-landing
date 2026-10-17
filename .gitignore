@@ -7,3 +7,4 @@ next-env.d.ts
 .taste-skill/inspect/
 .playwright/
 .impeccable/
+screenshots/lighthouse.json

@@ -1,6 +1,6 @@
 # Pazzit, landing
 
-Landing estática de Pazzit (Next.js + Tailwind CSS). Todo el movimiento es CSS; el JS solo marca cuándo entra cada bloque en pantalla (`components/InView.tsx`) y maneja el formulario.
+Landing estática de Pazzit (Next.js + Tailwind CSS). Todo el movimiento es CSS; el JS marca cuándo entra cada bloque en pantalla (`components/InView.tsx`) y maneja el formulario, el slider con el nombre en vivo, el cambio de tema, el menú móvil, la repetición del pase y los rituales al entrar en pantalla.
 
 ## Requisitos
 
@@ -36,9 +36,15 @@ NEXT_PUBLIC_SITE_URL=https://tu-dominio
 
 Las dos se leen al compilar: después de cambiarlas, volvé a correr `npm run build`.
 
+## Antes de publicar
+
+- [ ] Definir `NEXT_PUBLIC_SITE_URL`.
+- [ ] Definir `NEXT_PUBLIC_DEMO_ENDPOINT`. Sin él, el formulario muestra error en producción y el fallback sin JS postea a la propia página.
+- [ ] Completar todos los placeholders de `lib/site.ts`.
+
 ## Placeholders
 
-Todos viven en `lib/site.ts`. Cambiá el valor y se actualiza en toda la página. Un valor que empieza con `[` se considera sin completar: el footer lo muestra como texto, sin link. Los que son `null` también se muestran como texto.
+Todos viven en `lib/site.ts`. Cambiá el valor y se actualiza en toda la página. Solo `email`: si empieza con `[` se considera sin completar y el footer lo muestra como texto, sin link. Instagram, Términos y Privacidad se vuelven links únicamente cuando su `*Url` no es `null`; si no, se muestran como texto.
 
 | clave | dónde aparece |
 |---|---|
@@ -51,7 +57,7 @@ Todos viven en `lib/site.ts`. Cambiá el valor y se actualiza en toda la página
 | `datosAlojamiento` | seguridad y privacidad |
 | `faq.offline`, `faq.altaVecinos`, `faq.retencion`, `faq.implementacion` | preguntas frecuentes |
 
-Los datos de ejemplo de las ilustraciones (Juan Pérez, la unidad 4°B, el registro del sábado 18) están en `components/sections/ComoFunciona.tsx` y `components/sections/ParaQuien.tsx`, y son ficticios a propósito.
+Los datos de ejemplo de las ilustraciones (Juan Pérez, la unidad 4°B, el registro del sábado 18) están en `components/Pass.tsx`, `components/sections/ComoFunciona.tsx`, `components/sections/ParaQuien.tsx` y `components/sections/Seguridad.tsx`, y son ficticios a propósito.
 
 ## Fuentes
 
