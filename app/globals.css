@@ -552,7 +552,7 @@ html:not(.js) .cf-range { display: none; }
 .scan-frame span:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; border-radius: 0 8px 0 0; }
 .scan-frame span:nth-child(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; border-radius: 0 0 0 8px; }
 .scan-frame span:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; border-radius: 0 0 8px 0; }
-@media (max-width: 479px) {
+@media (max-width: 479px), (min-width: 1024px) and (max-width: 1159px) {
   .reg, .srch { min-width: 0; }
   .reg th:first-child, .reg td:first-child { display: none; }
   .reg th:nth-child(2), .reg td:nth-child(2) { padding-left: 0; }
@@ -659,7 +659,6 @@ html:not(.js) .cf-range { display: none; }
   .faq-chev { transition: transform var(--t-ui) var(--ease-out); }
 }
 .faq-a { padding: 0 20px 20px; max-width: 65ch; }
-.faq:not([open]) .faq-a { visibility: hidden; }
 @media (hover: hover) and (pointer: fine) { .faq summary:hover h3 { color: var(--azul-text); } }
 /* Al abrir, la respuesta baja y aparece (solo transform y opacity; el alto cambia de una vez). */
 @media (prefers-reduced-motion: no-preference) {
