@@ -1,0 +1,11 @@
+.git
+.next
+node_modules
+out
+*.tsbuildinfo
+.env*
+screenshots
+.claude
+.taste-skill
+.superpowers
+docs
