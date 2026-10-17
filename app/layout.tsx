@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Onest, Bagel_Fat_One } from "next/font/google";
+import { Onest } from "next/font/google";
+import localFont from "next/font/local";
 import { site } from "@/lib/site";
 import "./globals.css";
 
 const onest = Onest({ subsets: ["latin"], weight: ["400", "600", "700", "800"], display: "swap", variable: "--font-onest" });
-const bagel = Bagel_Fat_One({ subsets: ["latin"], weight: "400", display: "swap", variable: "--font-bagel-fat", preload: false });
+// Bagel Fat One (OFL) recortada a los glifos de "pasá nomás", su único uso: 4 kB en vez de 92 @font-face.
+// Para regenerarla: fonts.googleapis.com/css2?family=Bagel+Fat+One&text=pas%C3%A1%20nom%C3%A1s
+const bagel = localFont({ src: "./fonts/bagel-fat-one-pasa-nomas.woff2", weight: "400", display: "swap", variable: "--font-bagel-fat", preload: false });
 
 const title = "Pazzit, el pase de tus visitas";
 const description =

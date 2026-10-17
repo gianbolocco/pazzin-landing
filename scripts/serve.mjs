@@ -1,6 +1,7 @@
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { extname, join, resolve, sep } from "node:path";
+import { gzipSync } from "node:zlib";
 
 const root = resolve("out");
 const TYPES = {
@@ -16,8 +17,16 @@ export function serve(port = 3000) {
       const file = resolve(join(root, path));
       if (!file.startsWith(root + sep)) return res.writeHead(403).end();
       try {
-        const body = await readFile(file); // leer antes de escribir headers: si falla, el catch puede responder 404
-        res.writeHead(200, { "Content-Type": TYPES[extname(file)] ?? "application/octet-stream" }).end(body);
+        let body = await readFile(file); // leer antes de escribir headers: si falla, el catch puede responder 404
+        const type = TYPES[extname(file)] ?? "application/octet-stream";
+        // Como cualquier hosting estático: gzip para texto y caché larga para los assets con hash.
+        const headers = { "Content-Type": type, Vary: "Accept-Encoding" };
+        if (path.startsWith("/_next/static/")) headers["Cache-Control"] = "public, max-age=31536000, immutable";
+        if (/text|javascript|json|svg/.test(type) && /gzip/.test(req.headers["accept-encoding"] ?? "")) {
+          body = gzipSync(body);
+          headers["Content-Encoding"] = "gzip";
+        }
+        res.writeHead(200, headers).end(body);
       } catch {
         try { res.writeHead(404, { "Content-Type": TYPES[".html"] }).end(await readFile(join(root, "404.html"))); }
         catch { res.writeHead(404).end(); }
