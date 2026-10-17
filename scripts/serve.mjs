@@ -12,7 +12,9 @@ const TYPES = {
 export function serve(port = 3000) {
   return new Promise((done) => {
     const server = createServer(async (req, res) => {
-      let path = decodeURIComponent(new URL(req.url ?? "/", "http://x").pathname);
+      let path;
+      try { path = decodeURIComponent(new URL(req.url ?? "/", "http://x").pathname); }
+      catch { return res.writeHead(400).end(); }
       if (path.endsWith("/")) path += "index.html";
       const file = resolve(join(root, path));
       if (!file.startsWith(root + sep)) return res.writeHead(403).end();
@@ -28,8 +30,9 @@ export function serve(port = 3000) {
         }
         res.writeHead(200, headers).end(body);
       } catch {
-        try { res.writeHead(404, { "Content-Type": TYPES[".html"] }).end(await readFile(join(root, "404.html"))); }
-        catch { res.writeHead(404).end(); }
+        const nf = await readFile(join(root, "404.html")).catch(() => null);
+        if (nf) res.writeHead(404, { "Content-Type": TYPES[".html"] }).end(nf);
+        else res.writeHead(404).end();
       }
     });
     server.listen(port, () => done(server));

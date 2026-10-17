@@ -101,7 +101,7 @@ export function DemoForm() {
 
       <div className="field">
         <label htmlFor="f-contacto">WhatsApp o email</label>
-        <input {...text("contacto")} autoComplete="email" spellCheck={false} />
+        <input {...text("contacto")} autoComplete="off" spellCheck={false} />
         {err("contacto")}
       </div>
 

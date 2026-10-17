@@ -46,7 +46,7 @@ export const viewport: Viewport = {
 };
 
 // Antes del primer paint: marca que hay JS y aplica el tema guardado (sin flash).
-const THEME_SCRIPT = `(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('pazzit-theme');if(t==='light'||t==='dark')d.dataset.theme=t}catch(e){}})()`;
+const THEME_SCRIPT = `(function(){var d=document.documentElement;d.classList.add('js');setTimeout(function(){if(!d.classList.contains('io'))d.classList.remove('js')},3000);try{var t=localStorage.getItem('pazzit-theme');if(t==='light'||t==='dark')d.dataset.theme=t}catch(e){}})()`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
