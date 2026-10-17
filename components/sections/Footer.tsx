@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <footer className="grid lg:grid-cols-2">
       <div className="bg-azul grid place-items-center min-h-[44svh] lg:min-h-[640px] p-10">
-        <img src="/brand/pazzit-mark-blanco.svg" alt="" width={460} height={300} loading="lazy" className="w-[min(64%,420px)] h-auto" />
+        <img src="/brand/pazzit-mark-blanco.svg" alt="" width={460} height={300} className="w-[min(64%,420px)] h-auto" />
       </div>
       <div className="flex flex-col px-4 py-12 md:px-8 lg:px-16 lg:py-20">
         <Logo width={120} />
