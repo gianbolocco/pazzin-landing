@@ -8,3 +8,6 @@ next-env.d.ts
 .playwright/
 .impeccable/
 screenshots/lighthouse.json
+.claude/
+.taste-skill/
+skills-lock.json

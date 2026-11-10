@@ -1,70 +1,63 @@
 # Pazzit, landing
 
-Landing estática de Pazzit (Next.js + Tailwind CSS). Todo el movimiento es CSS; el JS marca cuándo entra cada bloque en pantalla (`components/InView.tsx`) y maneja el formulario, el slider con el nombre en vivo, el cambio de tema, el menú móvil, la repetición del pase y los rituales al entrar en pantalla.
+Landing estática de pazzit.com (Next.js 16 con export estático + Tailwind CSS v4). Le habla a la
+comisión directiva y a la administración del barrio, con la narrativa del brochure: cuatro dolores y
+cómo los resuelve Pazzit, con capturas reales de la app (barrio ficticio Los Aromos).
 
-## Requisitos
-
-- Node 24 (probado con Node 24.12.0; no probé versiones anteriores). `npm test` corre `lib/demo.test.ts` directo con `node --test`, así que depende del soporte de TypeScript de Node.
+Qué se decidió y por qué: `docs/superpowers/specs/2026-11-09-landing-v2-design.md`. Solo se muestran
+funciones que existen en la app (`../invitacionesQR`, rama `dev`).
 
 ## Comandos
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm test         # tests de validación y envío del formulario
-npm run build    # genera out/, el sitio estático listo para subir a cualquier hosting
-npm start        # sirve out/ en http://localhost:3000 (PORT cambia el puerto). Necesita npm run build antes
-npm run icons    # regenera icon-32, icon-192, icon-512, apple-touch-icon.png y og.png desde public/brand/
-npm run shots    # sirve out/, chequea scroll horizontal y guarda capturas en screenshots/. Necesita npm run build antes y el chromium de Playwright (npx playwright install chromium)
+npm run dev        # http://localhost:3000
+npm test           # validación del formulario (lib/demo) y la cuenta de horas (lib/horas)
+npm run build      # genera out/, el sitio estático
+npm start          # sirve out/ en http://localhost:3000 (PORT cambia el puerto). Necesita build
+npm run capturas   # convierte las capturas del brochure a WebP en public/capturas/
+npm run icons      # regenera los íconos y og.png desde public/brand/
+npm run shots      # sirve out/, chequea scroll horizontal (320 a 1440 y zoom 200 %) y guarda capturas en screenshots/
 ```
 
-`npm start` no es un servidor de desarrollo: sirve con gzip los archivos de texto y pone caché larga a `/_next/static/`, como un hosting estático.
+Node 24: `npm test` corre los `.test.ts` directo con `node --test`.
 
 ## Variables de entorno
 
-Crealas en `.env.local`:
+En `.env.local` y como build args en Coolify (se leen al compilar):
 
 ```
-NEXT_PUBLIC_DEMO_ENDPOINT=https://tu-endpoint
-NEXT_PUBLIC_SITE_URL=https://tu-dominio
+NEXT_PUBLIC_DEMO_ENDPOINT=https://formspree.io/f/xdeeqokv
+NEXT_PUBLIC_SITE_URL=https://pazzit.com
 ```
 
-- `NEXT_PUBLIC_DEMO_ENDPOINT` recibe un `POST` con JSON `{ nombre, rol, lugar, unidades, contacto, origen: "landing" }` y tiene que responder 2xx. `unidades` va como número, o como `null` si el campo está vacío. Sirve cualquier servicio de formularios (Formspree, Getform, una función propia). Sin la variable, en `npm run dev` el envío se simula; en producción se muestra el mensaje de error con el email.
-- El campo trampa (honeypot) se llama `website` en el HTML y no viaja en ese JSON. Si viene completado, el envío responde éxito sin hacer ningún request.
-- Sin JavaScript, el formulario no usa ese JSON: el navegador hace el POST nativo del `<form>` al mismo endpoint, con los campos como formulario (`nombre`, `rol`, `lugar`, `unidades`, `contacto`, `website`).
-- `NEXT_PUBLIC_SITE_URL` es la URL pública, para la imagen de Open Graph.
+- `NEXT_PUBLIC_DEMO_ENDPOINT` recibe un `POST` JSON `{ nombre, rol, lugar, lotes, contacto, origen: "landing" }`.
+  El pedido corto del hero manda solo `lugar` y `contacto`. Sin JS, el `<form>` postea directo al endpoint.
+  Ojo: con la variable puesta, también en `npm run dev` los envíos llegan de verdad.
+- `NEXT_PUBLIC_SITE_URL` es la URL pública: canonical, Open Graph, sitemap y JSON-LD.
 
-Las dos se leen al compilar: después de cambiarlas, volvé a correr `npm run build`.
+## Contacto
 
-## Antes de publicar
+Por ahora no hay mail ni teléfono públicos: el contacto es el formulario. El link a YouTube está en `lib/site.ts`.
 
-- [ ] Definir `NEXT_PUBLIC_SITE_URL`.
-- [ ] Definir `NEXT_PUBLIC_DEMO_ENDPOINT`. Sin él, el formulario muestra error en producción y el fallback sin JS postea a la propia página.
-- [ ] Completar todos los placeholders de `lib/site.ts`.
+## Cómo está armado el movimiento
 
-## Placeholders
+- `lib/progreso.ts`: un listener de scroll pasivo escribe `--p` (0→1) en cada escena. Nunca intercepta el scroll.
+- Escenas fijas (sticky): *Reglas* (el reloj y el veredicto INGRESO → NO PASA) y `components/Pasos.tsx`
+  (*Cómo funciona* y *Seguros*).
+- El resto aparece con `animation-timeline: view()` dentro de `@supports`; sin soporte queda visible y quieto.
+- El pase del hero (`components/Pase.tsx`) tiene su secuencia en CSS: escaneo, corte del talón y sello.
+  `PaseVivo` la repite al pasar el mouse o tocarlo.
+- Con `prefers-reduced-motion`, todo queda en su estado final; los cambios de estado siguen, sin desplazamientos.
+- Sin JS, el contenido se ve completo: la clase `.js` (que activa los estados atenuados) la pone el script del
+  `<head>` y se saca sola si la página no hidrata en 3 s.
 
-Todos viven en `lib/site.ts`. Cambiá el valor y se actualiza en toda la página. Solo `email`: si empieza con `[` se considera sin completar y el footer lo muestra como texto, sin link. Instagram, Términos y Privacidad se vuelven links únicamente cuando su `*Url` no es `null`; si no, se muestran como texto.
+## Capturas
 
-| clave | dónde aparece |
-|---|---|
-| `url` | no es un placeholder: sale de `NEXT_PUBLIC_SITE_URL` y se usa como `metadataBase` (Open Graph) |
-| `email` | footer y mensaje de error del formulario |
-| `instagram`, `instagramUrl` | footer (con URL se vuelve link) |
-| `precio`, `precioIncluye` | sección del piloto |
-| `plazoRespuesta` | mensaje de éxito del formulario ("…en menos de [PLAZO].") |
-| `terminosUrl`, `privacidadUrl` | footer (con URL se vuelven links) |
-| `datosAlojamiento` | seguridad y privacidad |
-| `faq.offline`, `faq.altaVecinos`, `faq.retencion`, `faq.implementacion` | preguntas frecuentes |
-
-Los datos de ejemplo de las ilustraciones (Juan Pérez, la unidad 4°B, el registro del sábado 18) están en `components/Pass.tsx`, `components/sections/ComoFunciona.tsx`, `components/sections/ParaQuien.tsx` y `components/sections/Seguridad.tsx`, y son ficticios a propósito.
-
-## Fuentes
-
-- **Onest** (400, 600, 700, 800) se carga con `next/font/google` en `app/layout.tsx`.
-- **Bagel Fat One** no sale de Google en tiempo de ejecución. Se usa un archivo local, `app/fonts/bagel-fat-one-pasa-nomas.woff2` (4 kB, licencia OFL), recortado a los glifos de "pasá nomás". Se carga con `next/font/local` y su único uso es la frase de la banda final (`components/sections/BandaFinal.tsx`).
-- Si cambiás esa frase, los caracteres nuevos no salen en Bagel Fat One y hay que regenerar el archivo. No hay script en el repo. Los pasos: abrir `https://fonts.googleapis.com/css2?family=Bagel+Fat+One&text=pas%C3%A1%20nom%C3%A1s` con el texto de la frase nueva en `text=`, copiar la URL del `src` del `@font-face` (el `.woff2`), bajarla y guardarla en `app/fonts/` con el mismo nombre. Si cambiás el nombre del archivo, actualizá también la ruta en `app/layout.tsx`.
+Salen de `../documentacion/brochure/img/raw/`, que se regeneran con el brochure (ver su `spec.md`).
+Después de regenerarlas, `npm run capturas`.
 
 ## Logos
 
-`public/brand/` tiene los SVG originales del manual: no se editan ni se recolorean. Van siempre como `<img>`, porque todos comparten `mask id="m1"` y puestos inline en la misma página chocarían.
+`public/brand/` tiene los SVG del manual: no se editan ni se recolorean. Van como `<img>` (comparten
+`mask id="m1"` y puestos inline en la misma página chocarían). Sobre navy va `pazzit-lockup-oscuro.svg`.

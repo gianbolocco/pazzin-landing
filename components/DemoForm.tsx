@@ -2,10 +2,10 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Check, CircleAlert } from "lucide-react";
 import { FIELD_ORDER, ROLES, submit, validate, type Errors, type FieldKey, type Fields } from "@/lib/demo";
-import { site } from "@/lib/site";
 
-const EMPTY: Fields = { nombre: "", rol: "", lugar: "", unidades: "", contacto: "", empresa: "" };
+const EMPTY: Fields = { nombre: "", rol: "", lugar: "", lotes: "", contacto: "", empresa: "" };
 
+// El pedido de demo completo del cierre. Sin JS, el navegador postea el form directo al endpoint.
 export function DemoForm() {
   const [f, setF] = useState<Fields>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
@@ -34,8 +34,7 @@ export function DemoForm() {
     const first = FIELD_ORDER.find((k) => errs[k]);
     if (first) { formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus(); return; }
     setStatus("sending");
-    const r = await submit(f);
-    setStatus(r);
+    setStatus(await submit(f));
   }
 
   const a11y = (k: FieldKey) => ({
@@ -47,37 +46,30 @@ export function DemoForm() {
     onChange: (e: { target: { value: string } }) => set(k, e.target.value), ...a11y(k),
   });
   const err = (k: FieldKey) =>
-    errors[k] ? <p id={`e-${k}`} className="field-error"><CircleAlert size={16} strokeWidth={2} aria-hidden />{errors[k]}</p> : null;
+    errors[k] ? <p id={`e-${k}`} className="campo-error"><CircleAlert size={16} strokeWidth={2} aria-hidden />{errors[k]}</p> : null;
 
   if (status === "ok") {
     return (
-      <div ref={doneRef} tabIndex={-1} role="status" className="form-done">
-        <span className="form-done-ic" aria-hidden><Check size={22} strokeWidth={2.5} /></span>
-        <p className="t-title text-white">Listo, te escribimos en menos de {site.plazoRespuesta}.</p>
+      <div ref={doneRef} tabIndex={-1} role="status" className="form-listo">
+        <span aria-hidden><Check size={22} strokeWidth={3} /></span>
+        <p>Listo. Te escribimos para coordinar la demo.</p>
       </div>
     );
   }
 
   return (
-    <form
-      ref={formRef}
-      noValidate
-      onSubmit={onSubmit}
-      action={process.env.NEXT_PUBLIC_DEMO_ENDPOINT}
-      method="post"
-      className="demo-form"
-    >
-      <div className="field">
+    <form ref={formRef} noValidate onSubmit={onSubmit} action={process.env.NEXT_PUBLIC_DEMO_ENDPOINT} method="post" className="form">
+      <div className="campo">
         <label htmlFor="f-nombre">Tu nombre</label>
         <input {...text("nombre")} autoComplete="name" />
         {err("nombre")}
       </div>
 
-      <fieldset className="field">
-        <legend>Sos…</legend>
-        <div className="rol-opts">
+      <fieldset className="campo">
+        <legend>Sos de…</legend>
+        <div className="roles">
           {ROLES.map((r) => (
-            <label key={r.value} className="rol-opt">
+            <label key={r.value} className="rol">
               <input type="radio" name="rol" value={r.value} checked={f.rol === r.value} onChange={() => set("rol", r.value)} {...a11y("rol")} />
               <span>{r.label}</span>
             </label>
@@ -86,21 +78,21 @@ export function DemoForm() {
         {err("rol")}
       </fieldset>
 
-      <div className="grid gap-5 sm:grid-cols-[1fr_200px]">
-        <div className="field">
-          <label htmlFor="f-lugar">Barrio o edificio</label>
+      <div className="form-fila">
+        <div className="campo">
+          <label htmlFor="f-lugar">Barrio</label>
           <input {...text("lugar")} autoComplete="organization" />
           {err("lugar")}
         </div>
-        <div className="field">
-          <label htmlFor="f-unidades">Unidades <span className="font-normal">(opcional)</span></label>
-          <input {...text("unidades")} inputMode="numeric" autoComplete="off" />
-          {err("unidades")}
+        <div className="campo">
+          <label htmlFor="f-lotes">Lotes <span>(opcional)</span></label>
+          <input {...text("lotes")} inputMode="numeric" autoComplete="off" />
+          {err("lotes")}
         </div>
       </div>
 
-      <div className="field">
-        <label htmlFor="f-contacto">WhatsApp o email</label>
+      <div className="campo">
+        <label htmlFor="f-contacto">WhatsApp o mail</label>
         <input {...text("contacto")} autoComplete="off" spellCheck={false} />
         {err("contacto")}
       </div>
@@ -110,12 +102,10 @@ export function DemoForm() {
         <input id="f-website" name="website" tabIndex={-1} autoComplete="off" value={f.empresa} onChange={(e) => set("empresa", e.target.value)} />
       </div>
 
-      {summaryCount > 0 && Object.keys(errors).length > 0 && <p role="alert" className="form-summary">Revisá {summaryCount === 1 ? "1 campo" : `${summaryCount} campos`}.</p>}
-      {status === "error" && (
-        <p role="alert" className="form-summary">No pudimos enviarlo. Probá de nuevo o escribinos a {site.email}.</p>
-      )}
+      {summaryCount > 0 && Object.keys(errors).length > 0 && <p role="alert" className="form-resumen">Revisá {summaryCount === 1 ? "1 campo" : `${summaryCount} campos`}.</p>}
+      {status === "error" && <p role="alert" className="form-resumen">No pudimos enviarlo. Probá de nuevo en un rato.</p>}
 
-      <button type="submit" className="btn btn-sol w-full sm:w-auto sm:px-8" style={{ minHeight: 52 }} aria-disabled={status === "sending" || undefined}>
+      <button type="submit" className="form-enviar" aria-disabled={status === "sending" || undefined}>
         {status === "sending" ? "Enviando…" : "Pedí una demo"}
       </button>
       <p className="sr-only" role="status">{status === "sending" ? "Enviando…" : ""}</p>

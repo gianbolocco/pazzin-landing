@@ -6,9 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "node scripts/serve.mjs",
-    "test": "node --test lib/demo.test.ts",
+    "test": "node --test lib/demo.test.ts lib/horas.test.ts",
     "icons": "node scripts/icons.mjs",
-    "shots": "node scripts/shots.mjs"
+    "shots": "node scripts/shots.mjs",
+    "capturas": "node scripts/capturas.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.58.0",
