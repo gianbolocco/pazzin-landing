@@ -1,12 +1,12 @@
-export type FieldKey = "nombre" | "rol" | "lugar" | "unidades" | "contacto";
+export type FieldKey = "nombre" | "rol" | "lugar" | "lotes" | "contacto";
 export type Fields = Record<FieldKey, string> & { empresa: string };
 export type Errors = Partial<Record<FieldKey, string>>;
 
-export const FIELD_ORDER: FieldKey[] = ["nombre", "rol", "lugar", "unidades", "contacto"];
+export const FIELD_ORDER: FieldKey[] = ["nombre", "rol", "lugar", "lotes", "contacto"];
 export const ROLES = [
+  { value: "comision", label: "Comisión directiva" },
+  { value: "administracion", label: "Administración" },
   { value: "vecino", label: "Vecino" },
-  { value: "administrador", label: "Administrador" },
-  { value: "porteria", label: "Portería" },
 ];
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -22,9 +22,19 @@ export function validate(f: Fields): Errors {
   const e: Errors = {};
   if (!f.nombre.trim()) e.nombre = "Falta tu nombre para saber a quién escribirle.";
   if (!ROLES.some((r) => r.value === f.rol)) e.rol = "Elegí qué rol tenés así te mostramos lo que te sirve.";
-  if (!f.lugar.trim()) e.lugar = "Falta el nombre del barrio o edificio.";
-  const u = f.unidades.trim();
-  if (u && !/^[1-9]\d*$/.test(u)) e.unidades = "Poné un número de unidades, por ejemplo 40.";
+  if (!f.lugar.trim()) e.lugar = "Falta el nombre del barrio.";
+  const u = f.lotes.trim();
+  if (u && !/^[1-9]\d*$/.test(u)) e.lotes = "Poné la cantidad de lotes, por ejemplo 150.";
+  const c = f.contacto.trim();
+  if (!c) e.contacto = "Falta tu WhatsApp o email para poder escribirte.";
+  else if (!isContacto(c)) e.contacto = "Revisá el WhatsApp o el email; así no nos llega.";
+  return e;
+}
+
+// El pedido corto del hero: solo el barrio y cómo escribirle. El resto se pregunta al responder.
+export function validateCorto(f: Fields): Errors {
+  const e: Errors = {};
+  if (!f.lugar.trim()) e.lugar = "Falta el nombre del barrio.";
   const c = f.contacto.trim();
   if (!c) e.contacto = "Falta tu WhatsApp o email para poder escribirte.";
   else if (!isContacto(c)) e.contacto = "Revisá el WhatsApp o el email; así no nos llega.";
@@ -49,7 +59,7 @@ export async function submit(f: Fields, endpoint = process.env.NEXT_PUBLIC_DEMO_
         nombre: f.nombre.trim(),
         rol: f.rol,
         lugar: f.lugar.trim(),
-        unidades: f.unidades.trim() ? Number(f.unidades) : null,
+        lotes: f.lotes.trim() ? Number(f.lotes) : null,
         contacto: f.contacto.trim(),
         origen: "landing",
       }),
